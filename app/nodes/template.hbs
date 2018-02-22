@@ -1,0 +1,11 @@
+
+{{#if model.getNodes.isRunning}}
+  {{paper-progress-circular warn=true class="md-hue-3" diameter=96}}
+{{else}}
+  {{#paper-toolbar}}
+    {{#paper-toolbar-tools}}
+      <h2>Nodes ({{nodesCount}})</h2>
+    {{/paper-toolbar-tools}}
+  {{/paper-toolbar}}
+  {{occluded-table model=nodes}}
+{{/if}}
