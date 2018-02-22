@@ -25,9 +25,8 @@ export default Component.extend({
     ]
   }),
 
-  init() {
+  didReceiveAttrs() {
     this._super(...arguments);
-
     let table = new Table(get(this, 'columns'), get(this, 'model'), { enableSync: get(this, 'enableSync') });
     let sortColumn = get(table, 'allColumns').findBy('valuePath', get(this, 'sort'));
 

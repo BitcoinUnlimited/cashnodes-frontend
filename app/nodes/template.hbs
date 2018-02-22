@@ -6,13 +6,20 @@
   <div class="layout-column flex layout-align-space-araund md-padding">
       {{#paper-toolbar}}
         {{#paper-toolbar-tools}}
-          <h2>Bitcoin Cash Nodes ({{nodesCount}})</h2>
-          <span class="flex"></span>
-          {{#paper-button raised=true}}
-            Filter
-          {{/paper-button}}
+          <h2>Bitcoin Cash Nodes</h2>
         {{/paper-toolbar-tools}}
       {{/paper-toolbar}}
-      {{occluded-table model=nodesData}}
+      <p class="md-padding">
+        Snapshot of reachable Bitcoin Cash nodes as of {{snapshotDate}}.
+      </p>
+      <div class="layout-row md-padding">
+        {{paper-input class="flex-100" label="Filter nodes, e.g., BUCacsh:1 or, 73.172" value=filter onChange=(action 'filterNodes') icon="search"}}
+      </div>
+      <p class="md-padding">
+        Showing {{fileterNodesCount}} out of {{nodesCount}}.
+      </p>
+      <div class="md-padding">
+        {{occluded-table model=nodesData}}
+      </div>
   </div>
 {{/if}}

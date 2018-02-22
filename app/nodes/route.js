@@ -1,4 +1,4 @@
-import { get } from '@ember/object';
+import { get, set } from '@ember/object';
 import Route from '@ember/routing/route';
 import fetch from 'fetch';
 import { task } from 'ember-concurrency';
@@ -16,6 +16,7 @@ export default Route.extend({
     const snapshot = snapshots['snapshots'][0];
     const response = yield fetch(`https://cashnodes.bitcoinunlimited.info/snapshots/${snapshot}`);
     const nodes = yield response.json();
+    set(nodes, 'snapshot', snapshot);
     return nodes;
   }).restartable()
 });
