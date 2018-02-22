@@ -18,11 +18,10 @@ export default Component.extend({
 
   columns: computed(function() {
     return [
-      {label: 'Protocol version', valuePath: 'protocolVersion'},
-      {label: 'User Agent', valuePath: 'userAgent'},
+      {label: 'Address', valuePath: 'addressData', sortable: false, cellComponent: 'three-lines-cell'},
+      {label: 'User Agent', valuePath: 'userAgentData', cellComponent: 'three-lines-cell'},
       {label: 'Height', valuePath: 'height'},
-      {label: 'Location', valuePath: 'city'},
-      {label: 'Address', valuePath: 'address', sortable: false},
+      {label: 'Location', valuePath: 'locationData', cellComponent: 'three-lines-cell'},
     ]
   }),
 

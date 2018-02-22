@@ -1,6 +1,7 @@
 import Controller from '@ember/controller';
 import { computed, get } from '@ember/object';
 import { reads } from '@ember/object/computed';
+import moment from 'moment';
 
 export default Controller.extend({
   _nodes: reads('model.getNodes.value'),
@@ -27,7 +28,34 @@ export default Controller.extend({
     });
   }),
 
-  nodesCount: computed('nodes.[]', function() {
+  nodesData: computed('nodes', function() {
+    const nodes = get(this, 'nodes');
+    return nodes.map(node => {
+      node['addressData'] = [
+        node.address,
+        node.hostname,
+        moment.unix(node.connectedSince).from(moment())
+      ];
+      node['userAgentData'] = [
+        `${node.userAgent} (${node.protocolVersion})`,
+        'SERVICE BITS, HERE',
+        ''
+      ];
+      node['locationData'] = [
+        `${[node.countryCode, node.city].filter(e => {return e;}).join(',')}`,
+        node.timezone,
+        ''
+      ];
+      node['networkData'] = [
+        node.hostname,
+        node.asn,
+        ''
+      ];
+      return node;
+    });
+  }),
+
+  nodesCount: computed('nodesData.[]', function() {
     return get(this, 'nodes').length;
   })
 });
