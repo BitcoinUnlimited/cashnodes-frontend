@@ -11,10 +11,10 @@ export default Route.extend({
   },
 
   getNodesTask: task(function *() {
-    const snapshots_response = yield fetch('http://cashnodes.bitcoinunlimited.info/snapshots');
+    const snapshots_response = yield fetch('https://cashnodes.bitcoinunlimited.info/snapshots');
     const snapshots = yield snapshots_response.json();
     const snapshot = snapshots['snapshots'][0];
-    const response = yield fetch(`http://cashnodes.bitcoinunlimited.info/snapshots/${snapshot}`);
+    const response = yield fetch(`https://cashnodes.bitcoinunlimited.info/snapshots/${snapshot}`);
     const nodes = yield response.json();
     return nodes;
   }).restartable()

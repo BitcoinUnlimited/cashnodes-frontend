@@ -1,11 +1,18 @@
-
 {{#if model.getNodes.isRunning}}
-  {{paper-progress-circular warn=true class="md-hue-3" diameter=96}}
+  <div class="layout flex layout-align-space-around">
+    {{paper-progress-circular warn=true class="md-hue-3" diameter=96}}
+  </div>
 {{else}}
-  {{#paper-toolbar}}
-    {{#paper-toolbar-tools}}
-      <h2>Nodes ({{nodesCount}})</h2>
-    {{/paper-toolbar-tools}}
-  {{/paper-toolbar}}
-  {{occluded-table model=nodes}}
+  <div class="layout-column flex layout-align-space-araund md-padding">
+      {{#paper-toolbar}}
+        {{#paper-toolbar-tools}}
+          <h2>Bitcoin Cash Nodes ({{nodesCount}})</h2>
+          <span class="flex"></span>
+          {{#paper-button raised=true}}
+            Filter
+          {{/paper-button}}
+        {{/paper-toolbar-tools}}
+      {{/paper-toolbar}}
+      {{occluded-table model=nodes}}
+  </div>
 {{/if}}
