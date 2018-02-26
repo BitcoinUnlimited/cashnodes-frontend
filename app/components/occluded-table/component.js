@@ -16,15 +16,6 @@ export default Component.extend({
   table: null,
   limit: 100,
 
-  columns: computed(function() {
-    return [
-      {label: 'Address', valuePath: 'addressData', sortable: false, cellComponent: 'three-lines-cell'},
-      {label: 'User Agent', valuePath: 'userAgentData', cellComponent: 'three-lines-cell'},
-      {label: 'Location', valuePath: 'locationData', cellComponent: 'three-lines-cell'},
-      {label: 'Network', valuePath: 'networkData', cellComponent: 'three-lines-cell'},
-    ]
-  }),
-
   didReceiveAttrs() {
     this._super(...arguments);
     let table = new Table(get(this, 'columns'), get(this, 'model'), { enableSync: get(this, 'enableSync') });

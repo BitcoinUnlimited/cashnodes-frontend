@@ -24,6 +24,15 @@ export default Controller.extend({
     return serviceBits;
   },
 
+  tableColumns: computed(function() {
+    return [
+      {label: 'Address', valuePath: 'addressData', sortable: false, cellComponent: 'three-lines-cell'},
+      {label: 'User Agent', valuePath: 'userAgentData', cellComponent: 'three-lines-cell'},
+      {label: 'Location', valuePath: 'locationData', cellComponent: 'three-lines-cell'},
+      {label: 'Network', valuePath: 'networkData', cellComponent: 'three-lines-cell'},
+    ]
+  }),
+
   nodes: computed('_nodes', function() {
     const _ns = get(this, '_nodes');
     return _ns.map(node => {
