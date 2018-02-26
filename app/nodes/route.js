@@ -13,10 +13,10 @@ export default Route.extend({
   },
 
   getNodesTask: task(function *() {
-    const snapshots_response = yield fetch(`${ENV.CashNodes.baseUrl}/snapshots`);
+    const snapshots_response = yield fetch(`${ENV.CashNodes.apiUrl}/snapshots`);
     const snapshots = yield snapshots_response.json();
     const snapshot = snapshots['snapshots'][0];
-    const response = yield fetch(`${ENV.CashNodes.baseUrl}/snapshots/${snapshot}`);
+    const response = yield fetch(`${ENV.CashNodes.apiUrl}/snapshots/${snapshot}`);
     const nodes = yield response.json();
     set(nodes, 'snapshot', snapshot);
     return nodes;

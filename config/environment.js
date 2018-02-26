@@ -23,7 +23,7 @@ module.exports = function(environment) {
     },
 
     CashNodes: {
-      baseUrl: 'https://cashnodes-api.bitcoinunlimited.info'
+      apiUrl: 'https://cashnodes-api.bitcoinunlimited.info'
     }
   };
 
