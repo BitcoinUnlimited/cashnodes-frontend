@@ -26,10 +26,32 @@ export default Controller.extend({
 
   tableColumns: computed(function() {
     return [
-      {label: 'Address', valuePath: 'addressData', sortable: false, cellComponent: 'three-lines-cell'},
-      {label: 'User Agent', valuePath: 'userAgentData', cellComponent: 'three-lines-cell'},
-      {label: 'Location', valuePath: 'locationData', cellComponent: 'three-lines-cell', breakpoints: ['desktop', 'jumbo']},
-      {label: 'Network', valuePath: 'networkData', cellComponent: 'three-lines-cell', breakpoints: ['tablet', 'desktop', 'jumbo']},
+      {
+        label: 'Address',
+        valuePath: 'addressData',
+        sortable: false,
+        cellComponent: 'three-lines-cell'
+      },
+      {
+        label: 'User Agent',
+        valuePath: 'userAgentData',
+        sortable: false,
+        cellComponent: 'three-lines-cell'
+      },
+      {
+        label: 'Location',
+        valuePath: 'locationData',
+        sortable: false,
+        cellComponent: 'three-lines-cell',
+        breakpoints: ['desktop', 'jumbo']
+      },
+      {
+        label: 'Network',
+        valuePath: 'networkData',
+        sortable: false,
+        cellComponent: 'three-lines-cell',
+        breakpoints: ['tablet', 'desktop', 'jumbo']
+      },
     ]
   }),
 
