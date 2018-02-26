@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { computed, get, set } from '@ember/object';
+import { get, set } from '@ember/object';
 import Table from 'ember-light-table';
 
 export default Component.extend({

@@ -2,6 +2,7 @@
                height='90vh'
                occlusion=true
                estimatedRowHeight=50
+               responsive=true
   as |t|}}
 
   {{t.head
@@ -14,6 +15,10 @@
     onScrolledToBottom=(action 'onScrolledToBottom')
   as |body|
   }}
+    {{#body.expanded-row as |row|}}
+      {{responsive-expanded-row table=table row=row}}
+    {{/body.expanded-row}}
+
     {{#if isLoading}}
       {{#body.loader}}
         {{table-loader}}
