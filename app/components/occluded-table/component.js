@@ -20,8 +20,8 @@ export default Component.extend({
     return [
       {label: 'Address', valuePath: 'addressData', sortable: false, cellComponent: 'three-lines-cell'},
       {label: 'User Agent', valuePath: 'userAgentData', cellComponent: 'three-lines-cell'},
-      {label: 'Height', valuePath: 'height'},
       {label: 'Location', valuePath: 'locationData', cellComponent: 'three-lines-cell'},
+      {label: 'Network', valuePath: 'networkData', cellComponent: 'three-lines-cell'},
     ]
   }),
 

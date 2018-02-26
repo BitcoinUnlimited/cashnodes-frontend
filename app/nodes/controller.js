@@ -11,7 +11,7 @@ export default Controller.extend({
   _nodes: reads('model.getNodes.value'),
 
   snapshotDate: computed('snapshot', function() {
-    return moment.unix(parseInt(get(this, 'snapshot'))).format();
+    return moment.unix(parseInt(get(this, 'snapshot'))).format('dddd, MMMM DD, YYYY, HH:mmZ');
   }),
 
   _serviceBits(services) {
@@ -58,7 +58,7 @@ export default Controller.extend({
       set(node, 'userAgentData', [
         `${node.userAgent} (${node.protocolVersion})`,
         `${this._serviceBits(node.services).join(', ')}`,
-        ''
+        `height: ${node.height}`
       ]);
       set(node, 'locationData', [
         `${[node.countryCode, node.city].filter(e => {return e;}).join(',')}`,
@@ -66,9 +66,9 @@ export default Controller.extend({
         ''
       ]);
       set(node, 'networkData', [
-        node.hostname,
+        node.organizationName,
         node.asn,
-        ''
+        '',
       ]);
       return node;
     });

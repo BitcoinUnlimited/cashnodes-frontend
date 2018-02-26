@@ -3,3 +3,7 @@ $warn: 'amber';
 $accent: 'pink';
 
 @import 'ember-paper';
+
+.no-list-padding {
+  margin: 0 -16px;
+}
