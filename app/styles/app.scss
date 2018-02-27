@@ -16,11 +16,22 @@ $accent: 'pink';
   max-width: 50vw;
 }
 
+.odd-row {
+  background-color: #f0f4f6;
+}
+
+.even-row {
+  background-color: white;
+}
+
 .lt-row {
   height: 50px;
 
   &.is-selected {
-    background-color: #dedede;
+    border-color: #dadada;
+    border-width: 0;
+    border-bottom-width: 1px;
+    border-style: solid;
   }
 
   &:not(.is-selected):hover {
@@ -42,10 +53,6 @@ $accent: 'pink';
   }
 
   td {
-    border-color: #dadada;
-    border-width: 0;
-    border-bottom-width: 1px;
-    border-style: solid;
     font-size: 13px;
   }
 }

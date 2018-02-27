@@ -13,11 +13,9 @@
     canSelect=false
     scrollBuffer=200
     onScrolledToBottom=(action 'onScrolledToBottom')
+    rowComponent=(component 'colored-row')
   as |body|
   }}
-    {{#body.expanded-row as |row|}}
-      {{responsive-expanded-row table=table row=row}}
-    {{/body.expanded-row}}
 
     {{#if isLoading}}
       {{#body.loader}}
