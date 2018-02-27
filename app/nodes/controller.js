@@ -5,6 +5,8 @@ import { reads } from '@ember/object/computed';
 import { task, timeout } from 'ember-concurrency';
 import moment from 'moment';
 
+import mapNetworks from '../utils/map-networks';
+
 export default Controller.extend({
   filterQuery: '',
   snapshot: reads('model.getNodes.value.snapshot'),
@@ -97,7 +99,7 @@ export default Controller.extend({
         ''
       ]);
       set(node, 'networkData', [
-        node.organizationName,
+        mapNetworks(node.organizationName),
         node.asn,
         '',
       ]);
