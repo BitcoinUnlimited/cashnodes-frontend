@@ -112,7 +112,10 @@ export default Controller.extend({
         return node.address.match(filterQuery) || node.userAgent.match(filterQuery);
       });
     }
-    return result.sortBy('connectedSince').reverse();
+    return result.sortBy('connectedSince').reverse().map((node, idx) => {
+      set(node, 'idx', idx);
+      return node;
+    });
   }),
 
   nodesCount: computed('nodes.[]', function() {
