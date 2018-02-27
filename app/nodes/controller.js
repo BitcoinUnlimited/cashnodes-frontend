@@ -64,7 +64,7 @@ export default Controller.extend({
         address: `${node[0]}:${node[1]}`,
         protocolVersion: node[2],
         userAgent: node[3],
-        connectedSince: node[4],
+        connectedSince: parseInt(node[4]),
         services: node[5],
         height: node[6],
         hostname: node[7],
@@ -106,14 +106,13 @@ export default Controller.extend({
       return node;
     });
 
-    if (!filterQuery) {
-      return allNodes;
+    let result = allNodes;
+    if (filterQuery) {
+      result = allNodes.filter((node) => {
+        return node.address.match(filterQuery) || node.userAgent.match(filterQuery);
+      });
     }
-
-    const filteredNodes = allNodes.filter((node) => {
-      return node.address.match(filterQuery) || node.userAgent.match(filterQuery);
-    });
-    return filteredNodes;
+    return result.sortBy('connectedSince').reverse();
   }),
 
   nodesCount: computed('nodes.[]', function() {
