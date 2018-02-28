@@ -109,7 +109,8 @@ export default Controller.extend({
     let result = allNodes;
     if (filterQuery) {
       result = allNodes.filter((node) => {
-        return node.address.match(filterQuery) || node.userAgent.match(filterQuery);
+        const regexp = new RegExp(filterQuery, 'i');
+        return node.address.match(regexp) || node.userAgent.match(regexp);
       });
     }
     return result.sortBy('connectedSince').reverse().map((node, idx) => {
