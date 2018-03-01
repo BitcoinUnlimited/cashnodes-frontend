@@ -1,0 +1,30 @@
+{{#light-table table
+               height='80vh'
+               occlusion=true
+               estimatedRowHeight=50
+               responsive=true
+  as |t|}}
+
+  {{t.head
+    fixed=true
+  }}
+
+  {{#t.body
+    canSelect=false
+    scrollBuffer=200
+    onScrolledToBottom=(action 'onScrolledToBottom')
+    rowComponent=(component 'colored-row')
+  as |body|
+  }}
+
+    {{#if isLoading}}
+      {{#body.loader}}
+        {{table-loader}}
+      {{/body.loader}}
+    {{/if}}
+  {{/t.body}}
+
+  {{t.foot
+    fixed=true
+  }}
+{{/light-table}}

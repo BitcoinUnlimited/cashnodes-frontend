@@ -1,0 +1,63 @@
+$primary: 'deep-orange';
+$warn: 'amber';
+$accent: 'pink';
+
+@import 'ember-paper';
+
+.no-margin {
+  margin: 0;
+}
+
+.no-list-padding {
+  margin: 0 -16px;
+}
+
+.logo {
+  max-width: 50vw;
+}
+
+.odd-row {
+  background-color: #f0f4f6;
+}
+
+.even-row {
+  background-color: white;
+}
+
+.lt-row {
+  height: 50px;
+
+  &.is-selected {
+    border-color: #dadada;
+    border-width: 0;
+    border-bottom-width: 1px;
+    border-style: solid;
+  }
+
+  &:not(.is-selected):hover {
+    background-color: #f5f4f4;
+  }
+
+  &:last-of-type {
+    td {
+      border-bottom-width: 0;
+    }
+  }
+
+  &.colored-row {
+    color: white;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  td {
+    font-size: 13px;
+  }
+}
+
+code {
+  background-color: #fafafa;
+  font-size: 18px;
+}

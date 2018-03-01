@@ -1,0 +1,8 @@
+0.0.1
+- list nodes for the last snapshot
+- search through nodes in the last snapshot
+    + user agent
+    + IP address
+
+0.0.2
+- aggregate data about nodes from the last snapshot
