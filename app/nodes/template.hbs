@@ -11,6 +11,11 @@
         Snapshot of reachable Bitcoin Cash nodes as of {{snapshotDate}}.
       </p>
       <div class="layout-row md-padding">
+        <div class="flex-60 layout-align-space-around">
+          {{geo-chart data=geoData}}
+        </div>
+      </div>
+      <div class="layout-row md-padding">
         {{paper-input class="flex-50" label="Filter nodes, e.g., BUCash:1 or, 73.172" value=filter onChange=(action 'filterNodes') icon="search"}}
       </div>
       <p>

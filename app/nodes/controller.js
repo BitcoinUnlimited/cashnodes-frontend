@@ -123,6 +123,25 @@ export default Controller.extend({
     return get(this, 'nodes').length;
   }),
 
+  nodesCountByCountry: computed('nodes.[]', function() {
+    let byCountry = {};
+    get(this, 'nodes').forEach((node) => {
+      if (!node.countryCode) { return; }
+      const curr = get(byCountry, node.countryCode) || 0;
+      set(byCountry, node.countryCode, curr + 1);
+    });
+    return Object.keys(byCountry).map((key) => {
+      return {country: key, count: byCountry[key]};
+    }).sortBy('count');
+  }),
+
+  geoData: computed('nodesCountByCountry', function() {
+    return [['Country', 'Popularity']].concat(
+      get(this, 'nodesCountByCountry').map((node) => {
+        return [node.country, node.count];
+      }));
+  }),
+
   fileterNodesCount: computed('nodesData.[]', function() {
     return get(this, 'nodesData').length;
   }),
