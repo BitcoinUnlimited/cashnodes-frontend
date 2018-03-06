@@ -109,8 +109,8 @@ export default Controller.extend({
     let result = allNodes;
     if (filterQuery) {
       result = allNodes.filter((node) => {
-        const regexp = new RegExp(filterQuery, 'i');
-        return node.address.match(regexp) || node.userAgent.match(regexp);
+        const regexp = new RegExp(escape(filterQuery), 'i');
+        return escape(node.address).match(regexp) || escape(node.userAgent).match(regexp);
       });
     }
     return result.sortBy('connectedSince').reverse().map((node, idx) => {
