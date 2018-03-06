@@ -123,6 +123,46 @@ export default Controller.extend({
     return get(this, 'nodes').length;
   }),
 
+  nodesByUserAgent: computed('nodes.[]', function() {
+    let byUserAgent = {};
+    get(this, 'nodes').forEach((node) => {
+      let userAgent = get(node, 'userAgent') || 'unknown';
+      const curr = byUserAgent[userAgent] || 0;
+      byUserAgent[userAgent] = curr + 1;
+    });
+    return byUserAgent;
+  }),
+
+  nodesCountByUserAgent: computed('nodesByUserAgent', function() {
+    const nodesByUserAgent = get(this, 'nodesByUserAgent');
+    if (!nodesByUserAgent) { return; }
+    return Object.keys(nodesByUserAgent).map((key) => {
+      return {userAgent: key, count: nodesByUserAgent[key]};
+    }).sortBy('count').reverse();
+  }),
+
+  nodesByUserAgentPie: computed('nodesByUserAgent', function() {
+    // pie chart: *abc* *bu* *xt* others (user agent)
+    const byUserAgent = get(this, 'nodesByUserAgent');
+    let pieData = {};
+    Object.keys(byUserAgent).forEach((userAgent) => {
+      let pieUserAgent = 'Others';
+      if (userAgent.match(/.*bu.*/i)) {
+        pieUserAgent = 'Bitcoin Unlimited';
+      } else if (userAgent.match(/.*xt.*/i)) {
+        pieUserAgent = 'XT';
+      } else if (userAgent.match(/.*abc.*/i)) {
+        pieUserAgent = 'ABC';
+      }
+      const curr = get(pieData, pieUserAgent) || 0;
+      set(pieData, pieUserAgent, curr + byUserAgent[userAgent]);
+    });
+    const pieDataTable = Object.keys(pieData).map((key) => {
+      return [key, pieData[key]];
+    });
+    return [['User Agent', 'Count']].concat(pieDataTable);
+  }),
+
   nodesCountByCountry: computed('nodes.[]', function() {
     let byCountry = {};
     get(this, 'nodes').forEach((node) => {
@@ -132,7 +172,21 @@ export default Controller.extend({
     });
     return Object.keys(byCountry).map((key) => {
       return {country: key, count: byCountry[key]};
-    }).sortBy('count');
+    }).sortBy('count').reverse();
+  }),
+
+  nodesCountByNetwork: computed('nodesData.[]', function() {
+    let byNet = {};
+    get(this, 'nodesData').forEach((node) => {
+      const netData = get(node, 'networkData')
+      if (!netData) { return; }
+      if (!netData[0]) { return; }
+      const curr = get(byNet, netData[0]) || 0;
+      set(byNet, netData[0], curr + 1);
+    });
+    return Object.keys(byNet).map((key) => {
+      return {net: key, count: get(byNet, key)};
+    }).sortBy('count').reverse();
   }),
 
   geoData: computed('nodesCountByCountry', function() {

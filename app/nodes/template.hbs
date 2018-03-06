@@ -11,6 +11,34 @@
         Snapshot of reachable Bitcoin Cash nodes as of {{snapshotDate}}.
       </p>
       <div class="layout-row md-padding">
+        <div class="flex-50">
+          {{pie-chart data=nodesByUserAgentPie}}
+        </div>
+        <div class="flex-50">
+          {{#paper-tabs
+            center=center
+            stretch=stretch
+            borderBottom=borderBottom
+            selected=selectedBasicTab
+            onChange=(action (mut selectedBasicTab)) as |tabs|}}
+            {{#tabs.tab}}
+              Countries
+            {{/tabs.tab}}
+            {{#tabs.tab}}
+              Network
+            {{/tabs.tab}}
+            {{#tabs.tab}}
+              User Agent
+            {{/tabs.tab}}
+          {{/paper-tabs}}
+          {{top-ten-tables
+              tableIdx=selectedBasicTab
+              countriesData=nodesCountByCountry
+              networkData=nodesCountByNetwork
+              userAgentData=nodesCountByUserAgent}}
+        </div>
+      </div>
+      <div class="layout-row md-padding">
         <div class="flex-60 layout-align-space-around">
           {{geo-chart data=geoData}}
         </div>
