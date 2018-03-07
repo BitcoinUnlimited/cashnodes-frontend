@@ -12,7 +12,7 @@
       </p>
       <div class="layout-row md-padding">
         <div class="flex-50">
-          {{pie-chart data=nodesByUserAgentPie}}
+          {{pie-chart data=nodesByUserAgentPie options=userAgentPieOptions}}
         </div>
         <div class="flex-50">
           {{#paper-tabs
@@ -39,8 +39,8 @@
         </div>
       </div>
       <div class="layout-row md-padding">
-        <div class="flex-60 layout-align-space-around">
-          {{geo-chart data=geoData}}
+        <div class="flex layout-align-space-around">
+          {{geo-chart data=geoData options=mapChartOptions}}
         </div>
       </div>
       <div class="layout-row md-padding">

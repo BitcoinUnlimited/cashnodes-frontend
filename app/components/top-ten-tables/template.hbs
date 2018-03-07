@@ -1,24 +1,26 @@
-<h2>{{title}}</h2>
+<div class="md-content">
+  <h2>{{title}}</h2>
 
-<table>
-  <thead>
-    <td>
-      Rank
-    </td>
-    <td>
-      {{variableName}}
-    </td>
-    <td>
-      Nodes
-    </td>
-  </thead>
-  <tbody>
-    {{#each rows as |row|}}
-      <tr>
-        <td>{{row.rank}}</td>
-        <td>{{row.value}}</td>
-        <td>{{row.count}}</td>
-      </tr>
-    {{/each}}
-  </tbody>
-</table>
+  <table>
+    <thead>
+      <td>
+        Rank
+      </td>
+      <td>
+        {{variableName}}
+      </td>
+      <td>
+        Nodes
+      </td>
+    </thead>
+    <tbody>
+      {{#each rows as |row|}}
+        <tr>
+          <td>{{row.rank}}</td>
+          <td>{{row.value}}</td>
+          <td>{{row.count}}</td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>

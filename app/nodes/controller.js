@@ -141,6 +141,14 @@ export default Controller.extend({
     }).sortBy('count').reverse();
   }),
 
+  userAgentPieOptions: computed(function() {
+    return {
+      chartArea: {width: '100%', height: '100%'},
+      title: 'Nodes by User Agent',
+      height: 500,
+      width: 500
+    };
+  }),
   nodesByUserAgentPie: computed('nodesByUserAgent', function() {
     // pie chart: *abc* *bu* *xt* others (user agent)
     const byUserAgent = get(this, 'nodesByUserAgent');
@@ -161,6 +169,10 @@ export default Controller.extend({
       return [key, pieData[key]];
     });
     return [['User Agent', 'Count']].concat(pieDataTable);
+  }),
+
+  mapChartOptions: computed(function() {
+    return {colorAxis: {colors: ['yellow', 'green']}};
   }),
 
   nodesCountByCountry: computed('nodes.[]', function() {
