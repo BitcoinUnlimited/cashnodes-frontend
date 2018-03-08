@@ -23,7 +23,7 @@ export default Component.extend({
     const idx = get(this, 'tableIdx');
     let data;
     let value;
-    if (!idx) {
+    if (idx == 0) {
       data = get(this, 'countriesData');
       value = 'country';
     } else if (idx == 1) {

@@ -9,6 +9,7 @@ import mapNetworks from '../utils/map-networks';
 
 export default Controller.extend({
   filterQuery: '',
+  selectedBasicTab: 0,
   snapshot: reads('model.getNodes.value.snapshot'),
   _nodes: reads('model.getNodes.value'),
 
