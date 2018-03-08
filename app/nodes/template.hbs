@@ -3,61 +3,67 @@
     {{paper-progress-circular warn=true class="md-hue-3" diameter=96}}
   </div>
 {{else}}
-  <div class="layout-column flex layout-align-space-araund md-padding">
+  <div class="layout flex layout-align-space-araund md-padding">
+    <div class="flex-55">
       <img src="/assets/images/logo.png" class="logo" alt="Bitcon Cash"/>
-      <h1>Bitcoin Cash Nodes</h1>
+    </div>
+    <div class="flex-20">
       <h6 class="no-margin">powered by <a href="https://www.bitcoinunlimited.info/" target="_blank">Bitcoin Unlimited</a></h6>
-      <p class="md-padding">
-        Snapshot of reachable Bitcoin Cash nodes as of {{snapshotDate}}.
-      </p>
-      <div class="layout-row md-padding">
-        <div class="flex-50">
-          {{pie-chart data=nodesByUserAgentPie options=userAgentPieOptions}}
-        </div>
-        <div class="flex-50">
-          {{#paper-tabs
-            center=center
-            stretch=stretch
-            borderBottom=borderBottom
-            selected=selectedBasicTab
-            onChange=(action (mut selectedBasicTab)) as |tabs|}}
-            {{#tabs.tab}}
-              Countries
-            {{/tabs.tab}}
-            {{#tabs.tab}}
-              Network
-            {{/tabs.tab}}
-            {{#tabs.tab}}
-              User Agent
-            {{/tabs.tab}}
-          {{/paper-tabs}}
-          {{top-ten-tables
-              tableIdx=selectedBasicTab
-              countriesData=nodesCountByCountry
-              networkData=nodesCountByNetwork
-              userAgentData=nodesCountByUserAgent}}
-        </div>
+    </div>
+  </div>
+  <div class="layout-column flex layout-align-space-araund md-padding">
+    <h1>Bitcoin Cash Nodes</h1>
+    <p>
+      Snapshot of reachable Bitcoin Cash nodes as of <strong>{{snapshotDate}}</strong>: total <strong>{{nodesCount}}</strong> nodes.
+    </p>
+    <div class="layout-row md-padding layout-xs-column">
+      <div class="flex">
+        {{pie-chart data=nodesByUserAgentPie options=userAgentPieOptions}}
       </div>
-      <div class="layout-row md-padding">
-        <div class="flex layout-align-space-around">
-          {{geo-chart data=geoData options=mapChartOptions}}
-        </div>
+      <div class="flex">
+        {{#paper-tabs
+          center=center
+          stretch=stretch
+          borderBottom=borderBottom
+          selected=selectedBasicTab
+          onChange=(action (mut selectedBasicTab)) as |tabs|}}
+          {{#tabs.tab}}
+            Countries
+          {{/tabs.tab}}
+          {{#tabs.tab}}
+            Network
+          {{/tabs.tab}}
+          {{#tabs.tab}}
+            User Agent
+          {{/tabs.tab}}
+        {{/paper-tabs}}
+        {{top-ten-tables
+            tableIdx=selectedBasicTab
+            countriesData=nodesCountByCountry
+            networkData=nodesCountByNetwork
+            userAgentData=nodesCountByUserAgent}}
       </div>
-      <div class="layout-row md-padding">
-        {{paper-input class="flex-50" label="Filter nodes, e.g., BUCash:1 or, 73.172" value=filter onChange=(action 'filterNodes') icon="search"}}
+    </div>
+    <div class="layout-row md-padding">
+      <div class="flex layout-align-space-around">
+        {{geo-chart data=geoData options=mapChartOptions}}
       </div>
-      <p>
-        Showing {{fileterNodesCount}} out of {{nodesCount}}.
-      </p>
-      <div class="md-padding">
-        {{occluded-table model=nodesData columns=tableColumns}}
-      </div>
-      <p class="md-padding">
-        Start a Bitcoin Cash full node on your Linux, Mac, BSD or Windows system to help
-        validate and relay transactions across the Bitcoin network by running this command:
-        <code>
-          command here
-        </code>
-      </p>
+    </div>
+    <div class="layout-row md-padding">
+      {{paper-input class="flex-50" label="Filter nodes, e.g., BUCash:1 or, 73.172" value=filter onChange=(action 'filterNodes') icon="search"}}
+    </div>
+    <p>
+      Showing {{fileterNodesCount}} out of {{nodesCount}}.
+    </p>
+    <div class="md-padding">
+      {{occluded-table model=nodesData columns=tableColumns}}
+    </div>
+    <p class="md-padding text-center">
+      Start a Bitcoin Cash full node on your Linux, Mac, BSD or Windows system to help
+      validate and relay transactions across the Bitcoin network by running this command:
+      <code>
+        command here
+      </code>
+    </p>
   </div>
 {{/if}}

@@ -147,7 +147,8 @@ export default Controller.extend({
       chartArea: {width: '100%', height: '100%'},
       title: 'Nodes by User Agent',
       height: 500,
-      width: 500
+      width: 500,
+      legend: {alignment: 'center', position: 'right'}
     };
   }),
   nodesByUserAgentPie: computed('nodesByUserAgent', function() {
