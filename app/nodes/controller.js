@@ -34,28 +34,32 @@ export default Controller.extend({
         valuePath: 'addressData',
         sortable: false,
         cellComponent: 'three-lines-cell',
-        breakpoints: ['tablet', 'desktop', 'jumbo']
+        breakpoints: ['tablet', 'desktop', 'jumbo'],
+        width: '35%'
       },
       {
         label: 'User Agent',
         valuePath: 'userAgentData',
         sortable: false,
         cellComponent: 'three-lines-cell',
-        breakpoints: ['tablet', 'desktop', 'jumbo']
+        breakpoints: ['tablet', 'desktop', 'jumbo'],
+        width: '30%'
       },
       {
         label: 'Location',
         valuePath: 'locationData',
         sortable: false,
         cellComponent: 'three-lines-cell',
-        breakpoints: ['desktop', 'jumbo']
+        breakpoints: ['desktop', 'jumbo'],
+        width: '17.5%'
       },
       {
         label: 'Network',
         valuePath: 'networkData',
         sortable: false,
         cellComponent: 'three-lines-cell',
-        breakpoints: ['tablet', 'desktop', 'jumbo']
+        breakpoints: ['tablet', 'desktop', 'jumbo'],
+        width: '17.5%'
       },
       {
         label: 'Nodes',
