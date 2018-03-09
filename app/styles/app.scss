@@ -108,3 +108,8 @@ tr.subheading td {
 .text-center {
   text-align: center;
 }
+
+.wrap-text {
+  overflow: hidden !important;
+  white-space: initial !important;
+}

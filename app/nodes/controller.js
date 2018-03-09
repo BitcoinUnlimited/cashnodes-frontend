@@ -33,13 +33,15 @@ export default Controller.extend({
         label: 'Address',
         valuePath: 'addressData',
         sortable: false,
-        cellComponent: 'three-lines-cell'
+        cellComponent: 'three-lines-cell',
+        breakpoints: ['tablet', 'desktop', 'jumbo']
       },
       {
         label: 'User Agent',
         valuePath: 'userAgentData',
         sortable: false,
-        cellComponent: 'three-lines-cell'
+        cellComponent: 'three-lines-cell',
+        breakpoints: ['tablet', 'desktop', 'jumbo']
       },
       {
         label: 'Location',
@@ -55,6 +57,13 @@ export default Controller.extend({
         cellComponent: 'three-lines-cell',
         breakpoints: ['tablet', 'desktop', 'jumbo']
       },
+      {
+        label: 'Nodes',
+        valuePath: 'nodeSummary',
+        sortable: false,
+        cellComponent: 'four-lines-cell',
+        breakpoints: ['mobile']
+      }
     ]
   }),
 
@@ -104,6 +113,12 @@ export default Controller.extend({
         node.asn,
         '',
       ]);
+      set(node, 'nodeSummary', [
+        `${node.address} (${mapNetworks(node.organizationName)})`,
+        node.hostname,
+        `${get(node, 'addressData')[2]} (${get(node, 'userAgentData')[2]})`,
+        get(node, 'userAgentData')[0]
+      ])
       return node;
     });
 
