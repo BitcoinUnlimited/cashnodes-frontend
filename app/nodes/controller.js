@@ -192,10 +192,6 @@ export default Controller.extend({
     return [['User Agent', 'Count']].concat(pieDataTable);
   }),
 
-  mapChartOptions: computed(function() {
-    return {colorAxis: {colors: ['yellow', 'green']}};
-  }),
-
   nodesCountByCountry: computed('nodes.[]', function() {
     let byCountry = {};
     get(this, 'nodes').forEach((node) => {
