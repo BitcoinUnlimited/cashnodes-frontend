@@ -24,14 +24,14 @@ export default Component.extend({
     let data;
     let value;
     if (idx == 0) {
-      data = get(this, 'countriesData');
-      value = 'country';
-    } else if (idx == 1) {
-      data = get(this, 'networkData');
-      value = 'net';
-    } else {
       data = get(this, 'userAgentData');
       value = 'userAgent';
+    } else if (idx == 1) {
+      data = get(this, 'countriesData');
+      value = 'country';
+    } else {
+      data = get(this, 'networkData');
+      value = 'net';
     }
     let rank = 1;
     return data.slice(0, 10).map((r) => {

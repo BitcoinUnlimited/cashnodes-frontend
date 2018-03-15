@@ -167,7 +167,8 @@ export default Controller.extend({
       title: 'Nodes by User Agent',
       height: 500,
       width: 500,
-      legend: {alignment: 'center', position: 'right'}
+      legend: {alignment: 'center', position: 'right'},
+      colors: ['#4CAF50', '#8BC34A', '#FFC107', '#FF9800']
     };
   }),
   nodesByUserAgentPie: computed('nodesByUserAgent', function() {
