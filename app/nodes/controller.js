@@ -9,6 +9,7 @@ import mapNetworks from '../utils/map-networks';
 
 export default Controller.extend({
   filterQuery: '',
+  selectedBasicTab: 0,
   snapshot: reads('model.getNodes.value.snapshot'),
   _nodes: reads('model.getNodes.value'),
 
@@ -32,28 +33,41 @@ export default Controller.extend({
         label: 'Address',
         valuePath: 'addressData',
         sortable: false,
-        cellComponent: 'three-lines-cell'
+        cellComponent: 'three-lines-cell',
+        breakpoints: ['tablet', 'desktop', 'jumbo'],
+        width: '35%'
       },
       {
         label: 'User Agent',
         valuePath: 'userAgentData',
         sortable: false,
-        cellComponent: 'three-lines-cell'
+        cellComponent: 'three-lines-cell',
+        breakpoints: ['tablet', 'desktop', 'jumbo'],
+        width: '30%'
       },
       {
         label: 'Location',
         valuePath: 'locationData',
         sortable: false,
         cellComponent: 'three-lines-cell',
-        breakpoints: ['desktop', 'jumbo']
+        breakpoints: ['desktop', 'jumbo'],
+        width: '17.5%'
       },
       {
         label: 'Network',
         valuePath: 'networkData',
         sortable: false,
         cellComponent: 'three-lines-cell',
-        breakpoints: ['tablet', 'desktop', 'jumbo']
+        breakpoints: ['tablet', 'desktop', 'jumbo'],
+        width: '17.5%'
       },
+      {
+        label: 'Nodes',
+        valuePath: 'nodeSummary',
+        sortable: false,
+        cellComponent: 'four-lines-cell',
+        breakpoints: ['mobile']
+      }
     ]
   }),
 
@@ -103,14 +117,20 @@ export default Controller.extend({
         node.asn,
         '',
       ]);
+      set(node, 'nodeSummary', [
+        `${node.address} (${mapNetworks(node.organizationName)})`,
+        node.hostname,
+        `${get(node, 'addressData')[2]} (${get(node, 'userAgentData')[2]})`,
+        get(node, 'userAgentData')[0]
+      ])
       return node;
     });
 
     let result = allNodes;
     if (filterQuery) {
       result = allNodes.filter((node) => {
-        const regexp = new RegExp(filterQuery, 'i');
-        return node.address.match(regexp) || node.userAgent.match(regexp);
+        const regexp = new RegExp(escape(filterQuery), 'i');
+        return escape(node.address).match(regexp) || escape(node.userAgent).match(regexp);
       });
     }
     return result.sortBy('connectedSince').reverse().map((node, idx) => {
@@ -123,6 +143,56 @@ export default Controller.extend({
     return get(this, 'nodes').length;
   }),
 
+  nodesByUserAgent: computed('nodes.[]', function() {
+    let byUserAgent = {};
+    get(this, 'nodes').forEach((node) => {
+      let userAgent = get(node, 'userAgent') || 'unknown';
+      const curr = byUserAgent[userAgent] || 0;
+      byUserAgent[userAgent] = curr + 1;
+    });
+    return byUserAgent;
+  }),
+
+  nodesCountByUserAgent: computed('nodesByUserAgent', function() {
+    const nodesByUserAgent = get(this, 'nodesByUserAgent');
+    if (!nodesByUserAgent) { return; }
+    return Object.keys(nodesByUserAgent).map((key) => {
+      return {userAgent: key, count: nodesByUserAgent[key]};
+    }).sortBy('count').reverse();
+  }),
+
+  userAgentPieOptions: computed(function() {
+    return {
+      chartArea: {width: '100%', height: '100%'},
+      title: 'Nodes by User Agent',
+      height: 500,
+      width: 500,
+      legend: {alignment: 'center', position: 'right'},
+      colors: ['#4CAF50', '#8BC34A', '#FFC107', '#FF9800']
+    };
+  }),
+  nodesByUserAgentPie: computed('nodesByUserAgent', function() {
+    // pie chart: *abc* *bu* *xt* others (user agent)
+    const byUserAgent = get(this, 'nodesByUserAgent');
+    let pieData = {};
+    Object.keys(byUserAgent).forEach((userAgent) => {
+      let pieUserAgent = 'Others';
+      if (userAgent.match(/.*bu.*/i)) {
+        pieUserAgent = 'Bitcoin Unlimited';
+      } else if (userAgent.match(/.*xt.*/i)) {
+        pieUserAgent = 'XT';
+      } else if (userAgent.match(/.*abc.*/i)) {
+        pieUserAgent = 'ABC';
+      }
+      const curr = get(pieData, pieUserAgent) || 0;
+      set(pieData, pieUserAgent, curr + byUserAgent[userAgent]);
+    });
+    const pieDataTable = Object.keys(pieData).map((key) => {
+      return [key, pieData[key]];
+    });
+    return [['User Agent', 'Count']].concat(pieDataTable);
+  }),
+
   nodesCountByCountry: computed('nodes.[]', function() {
     let byCountry = {};
     get(this, 'nodes').forEach((node) => {
@@ -132,7 +202,21 @@ export default Controller.extend({
     });
     return Object.keys(byCountry).map((key) => {
       return {country: key, count: byCountry[key]};
-    }).sortBy('count');
+    }).sortBy('count').reverse();
+  }),
+
+  nodesCountByNetwork: computed('nodesData.[]', function() {
+    let byNet = {};
+    get(this, 'nodesData').forEach((node) => {
+      const netData = get(node, 'networkData')
+      if (!netData) { return; }
+      if (!netData[0]) { return; }
+      const curr = get(byNet, netData[0]) || 0;
+      set(byNet, netData[0], curr + 1);
+    });
+    return Object.keys(byNet).map((key) => {
+      return {net: key, count: get(byNet, key)};
+    }).sortBy('count').reverse();
   }),
 
   geoData: computed('nodesCountByCountry', function() {
