@@ -394,7 +394,7 @@ get_bin_url() {
             elif [ "$ARCH" = "aarch64" ]; then
                 url="$url/BUcash-$VERSION-arm64.tar.gz"
                 echo "$url"
-            elif [ "$ARCH" = "x86_84" ]; then
+            elif [ "$ARCH" = "x86_64" ]; then
                 url="$url/BUcash-$VERSION-linux64.tar.gz"
                 echo "$url"
             elif [ "$ARCH" = "i686-pc" ]; then
@@ -428,8 +428,10 @@ download_bin() {
 
     print_info "\nDownloading Bitcoin Unlimited binaries.."
     if program_exists "wget"; then
-        wget -q "$1" -O BUcash-$VERSION.tar.gz &&
-            wget -q "$checksum_url" -O checksum.asc &&
+        echo $1
+        echo $checksum_url
+        wget "$1" -O BUcash-$VERSION.tar.gz &&
+            wget "$checksum_url" -O checksum.asc &&
             tar xzf BUcash-$VERSION.tar.gz
     elif program_exists "curl"; then
         curl -s "$1" -o BUcash-$VERSION.tar.gz &&
@@ -450,7 +452,8 @@ download_bin() {
         fi
     fi
 
-    rm -f BUcash-$VERSION.tar.gz checksum.asc signing_key.asc
+    rm -f BUcash-$VERSION.tar.gz checksum.asc
+    rename BUcash-?.?.? bucash
 }
 
 install_bucash() {
@@ -476,16 +479,20 @@ install_bucash() {
         fi
     fi
 
-    if [ -f "$TARGET_DIR/bitcoin/src/bitcoind" ]; then
+    echo $TARGET_DIR
+    # convert to a three digits format. It will not needed anymore once we get the
+    # folder name reporting the correct 4 digits version format
+    VER2=${VERSION%.*}
+    if [ -f "$TARGET_DIR/BitcoinUnlimited/src/bitcoind" ]; then
         # Install compiled binaries.
-        cp "$TARGET_DIR/bitcoin/src/bitcoind" "$TARGET_DIR/bin/" &&
-            cp "$TARGET_DIR/bitcoin/src/bitcoin-cli" "$TARGET_DIR/bin/" &&
+        cp "$TARGET_DIR/BitcoinUnlimited/src/bitcoind" "$TARGET_DIR/bin/" &&
+            cp "$TARGET_DIR/BitcoinUnlimited/src/bitcoin-cli" "$TARGET_DIR/bin/" &&
             print_success "Bitcoin Unlimited v$VERSION (compiled) installed successfully!"
-    elif [ -f "$TARGET_DIR/bitcoin-$VERSION/bin/bitcoind" ]; then
+    elif [ -f "$TARGET_DIR/BUcash-$VER2/bin/bitcoind" ]; then
         # Install downloaded binaries.
-        cp "$TARGET_DIR/bitcoin-$VERSION/bin/bitcoind" "$TARGET_DIR/bin/" &&
-            cp "$TARGET_DIR/bitcoin-$VERSION/bin/bitcoin-cli" "$TARGET_DIR/bin/" &&
-                rm -rf "$TARGET_DIR/bitcoin-$VERSION"
+        cp "$TARGET_DIR/BUcash-$VER2/bin/bitcoind" "$TARGET_DIR/bin/" &&
+            cp "$TARGET_DIR/BUcash-$VER2/bin/bitcoin-cli" "$TARGET_DIR/bin/" &&
+                rm -rf "$TARGET_DIR/BUcash-$VER2"
             print_success "Bitcoin Unlimited v$VERSION (binaries) installed successfully!"
     else
         print_error "Cannot find files to install."
@@ -499,7 +506,7 @@ port=$PORT
 maxconnections=64
 upnp=1
 
-dbcache=64
+#dbcache=64
 par=2
 checkblocks=7
 checklevel=0
