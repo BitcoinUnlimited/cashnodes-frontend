@@ -58,12 +58,17 @@
     <div class="md-padding">
       {{occluded-table model=nodesData columns=tableColumns}}
     </div>
-    <p class="md-padding text-center">
-      Start a Bitcoin Cash full node on your Linux, Mac, BSD or Windows system to help
-      validate and relay transactions across the Bitcoin network by running this command:
-      <code>
-        command here
-      </code>
-    </p>
+    <div class="md-padding text-center footer">
+      <div>
+        <p>
+          Start your own Bitcoin Cash full node on your Linux, Mac, BSD or Windows system by running this command:
+        </p>
+        <p>
+          <code>
+            curl https://cashnodes.io/install-bucash-full-node.sh | sh
+          </code>
+        </p>
+      </div>
+    </div>
   </div>
 {{/if}}

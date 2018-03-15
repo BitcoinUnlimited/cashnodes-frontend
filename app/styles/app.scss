@@ -57,9 +57,18 @@ $accent: 'green';
   }
 }
 
-code {
-  background-color: #fafafa;
+.footer {
+  background-color: #f8f8f8;
   font-size: 18px;
+  padding: 10px 5px 10px 5px;
+  border: 1px solid #efefee;
+  border-radius: 4px;
+}
+
+code {
+  font-size: 18px;
+  font-weight: bold;
+  border: 0px;
 }
 
 table {
