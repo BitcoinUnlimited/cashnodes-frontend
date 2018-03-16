@@ -1,0 +1,36 @@
+{{#if model.getNodes.isRunning}}
+  <div class="layout flex layout-align-space-around">
+    {{paper-progress-circular warn=true class="md-hue-3" diameter=96}}
+  </div>
+{{else}}
+  <div class="layout flex layout-align-space-araund md-padding">
+    <div class="flex-55">
+      <img src="/assets/images/logo.png" class="logo" alt="Bitcon Cash"/>
+    </div>
+    <div class="flex-20">
+      <h6 class="powered--text">powered by</h6>
+      <a href="https://www.bitcoinunlimited.info/" target="_blank">
+        <img class="powered--logo" src="https://www.bitcoinunlimited.info/img/bitcoin-unlimited.png" alt="Bitcoin Unlimited"/>
+      </a>
+    </div>
+  </div>
+  <div class="layout-column flex layout-align-space-araund md-padding">
+    <h1>Bitcoin Cash Nodes</h1>
+    <p>
+      Snapshot of reachable Bitcoin Cash nodes as of <strong>{{snapshotDate}}</strong>. Total <strong>{{nodesCount}}</strong> nodes: see and search {{#link-to "stats.nodes"}}nodes{{/link-to}}.
+    </p>
+
+    {{outlet}}
+
+    <div class="md-padding text-center footer">
+      <p>
+        Start your own Bitcoin Cash full node on your Linux, Mac, BSD or Windows system by running this command:
+      </p>
+      <p class="code">
+        <code>
+          curl <a href=https://cashnodes.io/install-bucash-full-node.sh> https://cashnodes.io/install-bucash-full-node.sh</a> | sh
+        </code>
+      </p>
+    </div>
+  </div>
+{{/if}}

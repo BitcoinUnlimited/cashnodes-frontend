@@ -1,0 +1,33 @@
+<div class="layout-row md-padding layout-xs-column">
+  <div class="flex">
+    {{pie-chart data=nodesByUserAgentPie options=userAgentPieOptions}}
+  </div>
+  <div class="flex">
+    {{#paper-tabs
+      center=center
+      stretch=stretch
+      borderBottom=borderBottom
+      selected=selectedBasicTab
+      onChange=(action (mut selectedBasicTab)) as |tabs|}}
+      {{#tabs.tab}}
+        User Agent
+      {{/tabs.tab}}
+      {{#tabs.tab}}
+        Countries
+      {{/tabs.tab}}
+      {{#tabs.tab}}
+        Network
+      {{/tabs.tab}}
+    {{/paper-tabs}}
+    {{top-ten-tables
+        tableIdx=selectedBasicTab
+        countriesData=nodesCountByCountry
+        networkData=nodesCountByNetwork
+        userAgentData=nodesCountByUserAgent}}
+  </div>
+</div>
+<div class="layout-row md-padding">
+  <div class="flex layout-align-space-around">
+    {{geo-chart data=geoData}}
+  </div>
+</div>
