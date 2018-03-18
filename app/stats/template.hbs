@@ -4,7 +4,7 @@
   </div>
 {{else}}
   <div class="layout flex layout-align-space-araund md-padding">
-    <div class="flex-55">
+    <div class="flex-75">
       {{#link-to "stats.index"}}
         <img src="/assets/images/logo.png" class="logo" alt="Bitcon Cash"/>
       {{/link-to}}
@@ -17,11 +17,6 @@
     </div>
   </div>
   <div class="layout-column flex layout-align-space-araund md-padding">
-    <h1>Bitcoin Cash Nodes</h1>
-    <p>
-      Snapshot of reachable Bitcoin Cash nodes as of <strong>{{snapshotDate}}</strong>. Total <strong>{{nodesCount}}</strong> nodes: see and search {{#link-to "stats.nodes"}}nodes{{/link-to}}.
-    </p>
-
     {{outlet}}
 
     <div class="md-padding text-center footer">

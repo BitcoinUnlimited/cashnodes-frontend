@@ -13,7 +13,7 @@ $accent: 'green';
 }
 
 .logo {
-  max-width: 50vw;
+  max-width: 70vw;
 }
 
 .odd-row {
@@ -57,10 +57,25 @@ $accent: 'green';
   }
 }
 
+a, a:visited {
+    text-decoration: none;
+    color: black;
+}
+a:hover {
+    text-decoration: underline;
+}
+
 .footer {
   background-color: #f8f8f8;
   font-size: 18px;
   padding: 10px 5px 10px 5px;
+  border: 1px solid #efefee;
+  border-radius: 4px;
+}
+
+.search-div {
+  background-color: #f8f8f8;
+  padding: 10px 10px 10px 10px;
   border: 1px solid #efefee;
   border-radius: 4px;
 }
