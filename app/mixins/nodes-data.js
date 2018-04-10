@@ -1,20 +1,17 @@
-import Controller from '@ember/controller';
-import { computed, get, set } from '@ember/object';
-import { reads } from '@ember/object/computed';
+import Mixin from '@ember/object/mixin';
 
-import { task, timeout } from 'ember-concurrency';
+import { computed, get, set } from '@ember/object';
+
 import moment from 'moment';
 
 import mapNetworks from '../utils/map-networks';
 
-export default Controller.extend({
-  filterQuery: '',
-  selectedBasicTab: 0,
-  snapshot: reads('model.getNodes.value.snapshot'),
-  _nodes: reads('model.getNodes.value'),
+export default Mixin.create({
+  snapshot: computed.reads('model.getNodes.value.snapshot'),
+  _nodes: computed.reads('model.getNodes.value'),
 
   snapshotDate: computed('snapshot', function() {
-    return moment.unix(parseInt(get(this, 'snapshot'))).format('dddd, MMMM DD, YYYY, HH:mmZ');
+    return moment.unix(parseInt(get(this, 'snapshot'))).format('ddd MMM DD YYYY, HH:mm [UTC]Z');
   }),
 
   _serviceBits(services) {
@@ -26,50 +23,6 @@ export default Controller.extend({
     if (services & 16) { serviceBits.push('NODE_XTHIN'); }
     return serviceBits;
   },
-
-  tableColumns: computed(function() {
-    return [
-      {
-        label: 'Address',
-        valuePath: 'addressData',
-        sortable: false,
-        cellComponent: 'three-lines-cell',
-        breakpoints: ['tablet', 'desktop', 'jumbo'],
-        width: '35%'
-      },
-      {
-        label: 'User Agent',
-        valuePath: 'userAgentData',
-        sortable: false,
-        cellComponent: 'three-lines-cell',
-        breakpoints: ['tablet', 'desktop', 'jumbo'],
-        width: '30%'
-      },
-      {
-        label: 'Location',
-        valuePath: 'locationData',
-        sortable: false,
-        cellComponent: 'three-lines-cell',
-        breakpoints: ['desktop', 'jumbo'],
-        width: '17.5%'
-      },
-      {
-        label: 'Network',
-        valuePath: 'networkData',
-        sortable: false,
-        cellComponent: 'three-lines-cell',
-        breakpoints: ['tablet', 'desktop', 'jumbo'],
-        width: '17.5%'
-      },
-      {
-        label: 'Nodes',
-        valuePath: 'nodeSummary',
-        sortable: false,
-        cellComponent: 'four-lines-cell',
-        breakpoints: ['mobile']
-      }
-    ]
-  }),
 
   nodes: computed('_nodes', function() {
     const _ns = get(this, '_nodes');
@@ -161,38 +114,6 @@ export default Controller.extend({
     }).sortBy('count').reverse();
   }),
 
-  userAgentPieOptions: computed(function() {
-    return {
-      chartArea: {width: '100%', height: '100%'},
-      title: 'Nodes by User Agent',
-      height: 500,
-      width: 500,
-      legend: {alignment: 'center', position: 'right'},
-      colors: ['#4CAF50', '#8BC34A', '#FFC107', '#FF9800']
-    };
-  }),
-  nodesByUserAgentPie: computed('nodesByUserAgent', function() {
-    // pie chart: *abc* *bu* *xt* others (user agent)
-    const byUserAgent = get(this, 'nodesByUserAgent');
-    let pieData = {};
-    Object.keys(byUserAgent).forEach((userAgent) => {
-      let pieUserAgent = 'Others';
-      if (userAgent.match(/.*bu.*/i)) {
-        pieUserAgent = 'Bitcoin Unlimited';
-      } else if (userAgent.match(/.*xt.*/i)) {
-        pieUserAgent = 'XT';
-      } else if (userAgent.match(/.*abc.*/i)) {
-        pieUserAgent = 'ABC';
-      }
-      const curr = get(pieData, pieUserAgent) || 0;
-      set(pieData, pieUserAgent, curr + byUserAgent[userAgent]);
-    });
-    const pieDataTable = Object.keys(pieData).map((key) => {
-      return [key, pieData[key]];
-    });
-    return [['User Agent', 'Count']].concat(pieDataTable);
-  }),
-
   nodesCountByCountry: computed('nodes.[]', function() {
     let byCountry = {};
     get(this, 'nodes').forEach((node) => {
@@ -218,27 +139,4 @@ export default Controller.extend({
       return {net: key, count: get(byNet, key)};
     }).sortBy('count').reverse();
   }),
-
-  geoData: computed('nodesCountByCountry', function() {
-    return [['Country', 'Popularity']].concat(
-      get(this, 'nodesCountByCountry').map((node) => {
-        return [node.country, node.count];
-      }));
-  }),
-
-  fileterNodesCount: computed('nodesData.[]', function() {
-    return get(this, 'nodesData').length;
-  }),
-
-  doFilterNodes: task(function *(query) {
-    yield timeout(200);
-    set(this, 'filterQuery', query);
-  }).restartable(),
-
-  actions: {
-    filterNodes(filter) {
-      set(this, 'filter', filter);
-      get(this, 'doFilterNodes').perform(filter);
-    }
-  }
 });

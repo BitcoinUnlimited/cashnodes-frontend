@@ -1,5 +1,5 @@
 {{#light-table table
-               height='80vh'
+               height='100vh'
                occlusion=true
                estimatedRowHeight=50
                responsive=true
@@ -11,7 +11,7 @@
 
   {{#t.body
     canSelect=false
-    scrollBuffer=200
+    scrollBuffer=100
     onScrolledToBottom=(action 'onScrolledToBottom')
     rowComponent=(component 'colored-row')
   as |body|
