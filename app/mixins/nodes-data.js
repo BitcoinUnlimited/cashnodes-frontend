@@ -1,19 +1,17 @@
-import Controller from '@ember/controller';
-import { computed, get, set } from '@ember/object';
-import { reads } from '@ember/object/computed';
+import Mixin from '@ember/object/mixin';
 
-import { task, timeout } from 'ember-concurrency';
+import { computed, get, set } from '@ember/object';
+
 import moment from 'moment';
 
 import mapNetworks from '../utils/map-networks';
 
-export default Controller.extend({
-  filterQuery: '',
-  snapshot: reads('model.getNodes.value.snapshot'),
-  _nodes: reads('model.getNodes.value'),
+export default Mixin.create({
+  snapshot: computed.reads('model.getNodes.value.snapshot'),
+  _nodes: computed.reads('model.getNodes.value'),
 
   snapshotDate: computed('snapshot', function() {
-    return moment.unix(parseInt(get(this, 'snapshot'))).format('dddd, MMMM DD, YYYY, HH:mmZ');
+    return moment.unix(parseInt(get(this, 'snapshot'))).format('ddd MMM DD YYYY, HH:mm [UTC]Z');
   }),
 
   _serviceBits(services) {
@@ -25,37 +23,6 @@ export default Controller.extend({
     if (services & 16) { serviceBits.push('NODE_XTHIN'); }
     return serviceBits;
   },
-
-  tableColumns: computed(function() {
-    return [
-      {
-        label: 'Address',
-        valuePath: 'addressData',
-        sortable: false,
-        cellComponent: 'three-lines-cell'
-      },
-      {
-        label: 'User Agent',
-        valuePath: 'userAgentData',
-        sortable: false,
-        cellComponent: 'three-lines-cell'
-      },
-      {
-        label: 'Location',
-        valuePath: 'locationData',
-        sortable: false,
-        cellComponent: 'three-lines-cell',
-        breakpoints: ['desktop', 'jumbo']
-      },
-      {
-        label: 'Network',
-        valuePath: 'networkData',
-        sortable: false,
-        cellComponent: 'three-lines-cell',
-        breakpoints: ['tablet', 'desktop', 'jumbo']
-      },
-    ]
-  }),
 
   nodes: computed('_nodes', function() {
     const _ns = get(this, '_nodes');
@@ -103,14 +70,20 @@ export default Controller.extend({
         node.asn,
         '',
       ]);
+      set(node, 'nodeSummary', [
+        `${node.address} (${mapNetworks(node.organizationName)})`,
+        node.hostname,
+        `${get(node, 'addressData')[2]} (${get(node, 'userAgentData')[2]})`,
+        get(node, 'userAgentData')[0]
+      ])
       return node;
     });
 
     let result = allNodes;
     if (filterQuery) {
       result = allNodes.filter((node) => {
-        const regexp = new RegExp(filterQuery, 'i');
-        return node.address.match(regexp) || node.userAgent.match(regexp);
+        const regexp = new RegExp(escape(filterQuery), 'i');
+        return escape(node.address).match(regexp) || escape(node.userAgent).match(regexp);
       });
     }
     return result.sortBy('connectedSince').reverse().map((node, idx) => {
@@ -123,19 +96,47 @@ export default Controller.extend({
     return get(this, 'nodes').length;
   }),
 
-  fileterNodesCount: computed('nodesData.[]', function() {
-    return get(this, 'nodesData').length;
+  nodesByUserAgent: computed('nodes.[]', function() {
+    let byUserAgent = {};
+    get(this, 'nodes').forEach((node) => {
+      let userAgent = get(node, 'userAgent') || 'unknown';
+      const curr = byUserAgent[userAgent] || 0;
+      byUserAgent[userAgent] = curr + 1;
+    });
+    return byUserAgent;
   }),
 
-  doFilterNodes: task(function *(query) {
-    yield timeout(200);
-    set(this, 'filterQuery', query);
-  }).restartable(),
+  nodesCountByUserAgent: computed('nodesByUserAgent', function() {
+    const nodesByUserAgent = get(this, 'nodesByUserAgent');
+    if (!nodesByUserAgent) { return; }
+    return Object.keys(nodesByUserAgent).map((key) => {
+      return {userAgent: key, count: nodesByUserAgent[key]};
+    }).sortBy('count').reverse();
+  }),
 
-  actions: {
-    filterNodes(filter) {
-      set(this, 'filter', filter);
-      get(this, 'doFilterNodes').perform(filter);
-    }
-  }
+  nodesCountByCountry: computed('nodes.[]', function() {
+    let byCountry = {};
+    get(this, 'nodes').forEach((node) => {
+      if (!node.countryCode) { return; }
+      const curr = get(byCountry, node.countryCode) || 0;
+      set(byCountry, node.countryCode, curr + 1);
+    });
+    return Object.keys(byCountry).map((key) => {
+      return {country: key, count: byCountry[key]};
+    }).sortBy('count').reverse();
+  }),
+
+  nodesCountByNetwork: computed('nodesData.[]', function() {
+    let byNet = {};
+    get(this, 'nodesData').forEach((node) => {
+      const netData = get(node, 'networkData')
+      if (!netData) { return; }
+      if (!netData[0]) { return; }
+      const curr = get(byNet, netData[0]) || 0;
+      set(byNet, netData[0], curr + 1);
+    });
+    return Object.keys(byNet).map((key) => {
+      return {net: key, count: get(byNet, key)};
+    }).sortBy('count').reverse();
+  }),
 });
