@@ -11,7 +11,7 @@ export default Mixin.create({
   _nodes: computed.reads('model.getNodes.value'),
 
   snapshotDate: computed('snapshot', function() {
-    return moment.unix(parseInt(get(this, 'snapshot'))).format('dddd, MMMM DD, YYYY, HH:mmZ');
+    return moment.unix(parseInt(get(this, 'snapshot'))).format('ddd MMM DD YYYY, HH:mm [UTC]Z');
   }),
 
   _serviceBits(services) {

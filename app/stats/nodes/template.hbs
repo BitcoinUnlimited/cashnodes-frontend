@@ -1,9 +1,15 @@
+<div>
+  <h2>Go back to main statistics for the {{#link-to "stats.index"}}<strong>{{nodesCount}}</strong> active nodes >>{{/link-to}}</h2>
+  <h4>{{snapshotDate}}</h4>
+</div>
+<div class="search-div">
 <div class="layout-row md-padding">
   {{paper-input class="flex-50" label="Filter nodes, e.g., BUCash:1 or, 73.172" value=filter onChange=(action 'filterNodes') icon="search"}}
 </div>
 <p>
   Showing {{fileterNodesCount}} out of {{nodesCount}}.
 </p>
+</div>
 <div class="md-padding">
   {{occluded-table model=nodesData columns=tableColumns}}
 </div>
