@@ -10,11 +10,11 @@ export default Component.extend({
   variableName: computed('tableIdx', function() {
     const idx = get(this, 'tableIdx');
     if (!idx) {
-      return 'Country';
-    } else if (idx == 1) {
-      return 'Network';
-    } else if (idx == 2) {
       return 'User Agent';
+    } else if (idx == 1) {
+      return 'Country';
+    } else if (idx == 2) {
+      return 'Network';
     }
 
   }),
