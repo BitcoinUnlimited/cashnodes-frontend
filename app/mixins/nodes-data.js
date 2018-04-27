@@ -100,8 +100,9 @@ export default Mixin.create({
     let byUserAgent = {};
     get(this, 'nodes').forEach((node) => {
       let userAgent = get(node, 'userAgent') || 'unknown';
-      const curr = byUserAgent[userAgent] || 0;
-      byUserAgent[userAgent] = curr + 1;
+      let userAgentWoEB = userAgent.split('(')[0] + '/';
+      const curr = byUserAgent[userAgentWoEB] || 0;
+      byUserAgent[userAgentWoEB] = curr + 1;
     });
     return byUserAgent;
   }),
