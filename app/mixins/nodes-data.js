@@ -85,7 +85,8 @@ export default Mixin.create({
     if (filterQuery) {
       result = allNodes.filter((node) => {
         const regexp = new RegExp(escape(filterQuery), 'i');
-        return escape(node.address).match(regexp) || escape(node.userAgent).match(regexp);
+        return escape(node.address).match(regexp) || escape(node.userAgent).match(regexp) ||
+               escape(this._serviceBits(node.services).join(' ')).match(regexp);
       });
     }
     return result.sortBy('connectedSince').reverse().map((node, idx) => {
