@@ -13,7 +13,7 @@ export default Controller.extend(NodesDataMixin, {
       height: 500,
       width: 500,
       legend: {alignment: 'center', position: 'right'},
-      colors: ['#4CAF50', '#8BC34A', '#FFC107', '#FF9800']
+      colors: ['#4CAF50', '#8BC34A', '#FFC107', '#D9D9D9', '#FF9800', '#FF3300' ]
     };
   }),
   nodesByUserAgentPie: computed('nodesByUserAgent', function() {
@@ -28,6 +28,10 @@ export default Controller.extend(NodesDataMixin, {
         pieUserAgent = 'XT';
       } else if (userAgent.match(/.*abc.*/i)) {
         pieUserAgent = 'ABC';
+      } else if (userAgent.match(/.*sv.*/i)) {
+        pieUserAgent = 'SV';
+      } else if (userAgent.match(/.*bitprim.*/i)) {
+        pieUserAgent = 'Bitprim';
       }
       const curr = get(pieData, pieUserAgent) || 0;
       set(pieData, pieUserAgent, curr + byUserAgent[userAgent]);
