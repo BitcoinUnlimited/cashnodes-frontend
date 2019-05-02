@@ -28,7 +28,6 @@ export default Controller.extend(NodesDataMixin, {
         pieUserAgent = 'XT';
       } else if (userAgent.match(/.*abc.*/i)) {
         pieUserAgent = 'ABC';
-      }
       } else if (userAgent.match(/.*bchd.*/i)) {
         pieUserAgent = 'BCHD';
       }
