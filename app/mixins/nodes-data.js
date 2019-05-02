@@ -23,6 +23,9 @@ export default Mixin.create({
     if (services & 16) { serviceBits.push('NODE_XTHIN'); }
     if (services & 32) { serviceBits.push('NODE_CASH'); }
     if (services & 64) { serviceBits.push('NODE_GRAPHENE'); }
+    if (services & 128) { serviceBits.push('NODE_WEAKBLOCKS'); }
+    if (services & 256) { serviceBits.push('NODE_CF'); }
+    if (services & 1024) { serviceBits.push('NODE_NETWORK_LIMITED'); }
     return serviceBits;
   },
 
