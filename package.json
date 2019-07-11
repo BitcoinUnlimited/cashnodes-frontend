@@ -55,6 +55,9 @@
     "node": "^4.5 || 6.* || >= 7.*"
   },
   "dependencies": {
-    "compressible": "^2.0.13"
+    "compressible": "^2.0.13",
+    "handlebars": "^4.1.0",
+    "lodash.defaultsdeep": "^4.6.1",
+    "lodash.merge": "^4.6.2"
   }
 }
