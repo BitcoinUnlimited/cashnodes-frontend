@@ -21,6 +21,11 @@ export default Mixin.create({
     if (services & 4) { serviceBits.push('NODE_BLOOM'); }
     if (services & 8) { serviceBits.push('NODE_WITNESS'); }
     if (services & 16) { serviceBits.push('NODE_XTHIN'); }
+    if (services & 32) { serviceBits.push('NODE_CASH'); }
+    if (services & 64) { serviceBits.push('NODE_GRAPHENE'); }
+    if (services & 128) { serviceBits.push('NODE_WEAKBLOCKS'); }
+    if (services & 256) { serviceBits.push('NODE_CF'); }
+    if (services & 1024) { serviceBits.push('NODE_NETWORK_LIMITED'); }
     return serviceBits;
   },
 
@@ -83,7 +88,8 @@ export default Mixin.create({
     if (filterQuery) {
       result = allNodes.filter((node) => {
         const regexp = new RegExp(escape(filterQuery), 'i');
-        return escape(node.address).match(regexp) || escape(node.userAgent).match(regexp);
+        return escape(node.address).match(regexp) || escape(node.userAgent).match(regexp) ||
+               escape(this._serviceBits(node.services).join(' ')).match(regexp);
       });
     }
     return result.sortBy('connectedSince').reverse().map((node, idx) => {
@@ -100,8 +106,9 @@ export default Mixin.create({
     let byUserAgent = {};
     get(this, 'nodes').forEach((node) => {
       let userAgent = get(node, 'userAgent') || 'unknown';
-      const curr = byUserAgent[userAgent] || 0;
-      byUserAgent[userAgent] = curr + 1;
+      let userAgentWoEB = userAgent.split('(')[0] + '/';
+      const curr = byUserAgent[userAgentWoEB] || 0;
+      byUserAgent[userAgentWoEB] = curr + 1;
     });
     return byUserAgent;
   }),

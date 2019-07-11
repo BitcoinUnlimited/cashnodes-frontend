@@ -1,8 +1,8 @@
 {
   "name": "cashnodes",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "private": true,
-  "description": "Small description for cashnodes goes here",
+  "description": "Cashnodes is a Bitcoin Cash full nodes counter",
   "license": "MIT",
   "author": "",
   "directories": {
@@ -55,6 +55,9 @@
     "node": "^4.5 || 6.* || >= 7.*"
   },
   "dependencies": {
-    "compressible": "^2.0.13"
+    "compressible": "^2.0.13",
+    "handlebars": "^4.1.0",
+    "lodash.defaultsdeep": "^4.6.1",
+    "lodash.merge": "^4.6.2"
   }
 }
