@@ -5121,10 +5121,9 @@ ember-getowner-polyfill@^2.2.0:
     ember-cli-version-checker "^2.1.0"
     ember-factory-for-polyfill "^1.3.1"
 
-ember-google-charts@^1.5.3:
+"ember-google-charts@git+https://github.com/nfc036/ember-google-charts#fbc505bfc58d825d5440a260293ea3dcae04d56d":
   version "1.7.0"
-  resolved "https://registry.yarnpkg.com/ember-google-charts/-/ember-google-charts-1.7.0.tgz#675ff4558530ba7f6e5aa462e0c99a455a9d9fe2"
-  integrity sha512-V5HZiirqGr9uXle3t3ABR6hKM7wthm0ua0smaEql/YImFQDz581n3fRjqpemwDyHzDN82flWu8qrcaVFnKMG7w==
+  resolved "git+https://github.com/nfc036/ember-google-charts#fbc505bfc58d825d5440a260293ea3dcae04d56d"
   dependencies:
     ember-cli-babel "^6.6.0"
     ember-concurrency "^0.8.20"

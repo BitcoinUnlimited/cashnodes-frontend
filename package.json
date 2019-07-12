@@ -39,7 +39,7 @@
     "ember-export-application-global": "^2.0.0",
     "ember-fetch": "^3.4.4",
     "ember-font-awesome": "^4.0.0-rc.2",
-    "ember-google-charts": "^1.5.3",
+    "ember-google-charts": "git+https://github.com/nfc036/ember-google-charts#fbc505bfc58d825d5440a260293ea3dcae04d56d",
     "ember-light-table": "^1.12.2",
     "ember-load-initializers": "^1.0.0",
     "ember-moment": "^7.6.0",
