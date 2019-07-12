@@ -1,6 +1,6 @@
 {
   "name": "cashnodes",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "private": true,
   "description": "Cashnodes is a Bitcoin Cash full nodes counter",
   "license": "MIT",
@@ -18,13 +18,13 @@
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
-    "ember-ajax": "^3.0.0",
-    "ember-cli": "^2.18.2",
+    "ember-ajax": "^4.0.1",
+    "ember-cli": "^3.10.1",
     "ember-cli-app-version": "^3.0.0",
-    "ember-cli-babel": "^6.6.0",
+    "ember-cli-babel": "^7.8.0",
     "ember-cli-dependency-checker": "^2.0.0",
     "ember-cli-eslint": "^4.2.1",
-    "ember-cli-favicon": "^1.0.0-beta.4",
+    "ember-cli-favicon": "^2.2.0",
     "ember-cli-htmlbars": "^2.0.1",
     "ember-cli-htmlbars-inline-precompile": "^1.0.0",
     "ember-cli-inject-live-reload": "^1.4.1",
@@ -39,11 +39,11 @@
     "ember-export-application-global": "^2.0.0",
     "ember-fetch": "^3.4.4",
     "ember-font-awesome": "^4.0.0-rc.2",
-    "ember-google-charts": "^1.5.3",
+    "ember-google-charts": "git+https://github.com/nfc036/ember-google-charts#fbc505bfc58d825d5440a260293ea3dcae04d56d",
     "ember-light-table": "^1.12.2",
     "ember-load-initializers": "^1.0.0",
     "ember-moment": "^7.6.0",
-    "ember-paper": "^1.0.0-beta.4",
+    "ember-paper": "git+https://github.com/sickpig/ember-paper.git#master",
     "ember-resolver": "^4.0.0",
     "ember-responsive": "^2.0.5",
     "ember-source": "~2.18.0",
@@ -55,9 +55,17 @@
     "node": "^4.5 || 6.* || >= 7.*"
   },
   "dependencies": {
+    "broccoli-clean-css": "^2.0.0",
+    "clean-css": "^4.2.1",
+    "clean-css-promise": "^3.0.0",
     "compressible": "^2.0.13",
+    "debug": "^3.1.0",
+    "ember-try": "^1.2.1",
     "handlebars": "^4.1.0",
+    "lodash": "^4.17.14",
     "lodash.defaultsdeep": "^4.6.1",
-    "lodash.merge": "^4.6.2"
+    "lodash.merge": "^4.6.2",
+    "minimatch": "^3.0.4",
+    "virtual-each": "git+https://github.com/sickpig/virtual-each.git#master"
   }
 }

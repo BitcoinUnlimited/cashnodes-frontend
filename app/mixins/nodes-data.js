@@ -1,3 +1,4 @@
+import { reads } from '@ember/object/computed';
 import Mixin from '@ember/object/mixin';
 
 import { computed, get, set } from '@ember/object';
@@ -7,8 +8,8 @@ import moment from 'moment';
 import mapNetworks from '../utils/map-networks';
 
 export default Mixin.create({
-  snapshot: computed.reads('model.getNodes.value.snapshot'),
-  _nodes: computed.reads('model.getNodes.value'),
+  snapshot: reads('model.getNodes.value.snapshot'),
+  _nodes: reads('model.getNodes.value'),
 
   snapshotDate: computed('snapshot', function() {
     return moment.unix(parseInt(get(this, 'snapshot'))).format('ddd MMM DD YYYY, HH:mm [UTC]Z');
