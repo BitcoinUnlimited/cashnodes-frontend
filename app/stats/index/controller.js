@@ -8,11 +8,21 @@ export default Controller.extend(NodesDataMixin, {
 
   userAgentPieOptions: computed(function() {
     return {
-      chartArea: {width: '100%', height: '100%'},
-      title: 'Nodes by User Agent',
-      height: 500,
-      width: 500,
-      legend: {alignment: 'center', position: 'right'},
+      chartArea: {width: '90%', height: '90%'},
+      title: 'ALL NODES',
+      height: 400,
+      width: 400,
+      legend: {alignment: 'center', position: 'bottom'},
+      colors: ['#4CAF50', '#8BC34A', '#FFC107', '#D9D9D9', '#FF9800']
+    };
+  }),
+  userAgentPieOptionsInC: computed(function() {
+    return {
+      chartArea: {width: '90%', height: '90%'},
+      title: 'IN CONSENSUS',
+      height: 400,
+      width: 400,
+      legend: {alignment: 'center', position: 'bottom'},
       colors: ['#4CAF50', '#8BC34A', '#FFC107', '#D9D9D9', '#FF9800']
     };
   }),
@@ -21,16 +31,7 @@ export default Controller.extend(NodesDataMixin, {
     const byUserAgent = get(this, 'nodesByUserAgent');
     let pieData = {};
     Object.keys(byUserAgent).forEach((userAgent) => {
-      let pieUserAgent = 'Others';
-      if (userAgent.match(/.*bu.*/i)) {
-        pieUserAgent = 'Bitcoin Unlimited';
-      } else if (userAgent.match(/.*xt.*/i)) {
-        pieUserAgent = 'XT';
-      } else if (userAgent.match(/.*abc.*/i)) {
-        pieUserAgent = 'ABC';
-      } else if (userAgent.match(/.*bchd.*/i)) {
-        pieUserAgent = 'BCHD';
-      }
+      let pieUserAgent = userAgent.split(':')[0].substr(1);
       const curr = get(pieData, pieUserAgent) || 0;
       set(pieData, pieUserAgent, curr + byUserAgent[userAgent]);
     });
@@ -39,6 +40,22 @@ export default Controller.extend(NodesDataMixin, {
     });
     return [['User Agent', 'Count']].concat(pieDataTable);
   }),
+
+  nodesByUserAgentPieInC: computed('nodesByUserAgentInConsensus', function() {
+    // pie chart: *abc* *bu* *xt* others (user agent)
+    const byUserAgent = get(this, 'nodesByUserAgentInConsensus');
+    let pieData = {};
+    Object.keys(byUserAgent).forEach((userAgent) => {
+      let pieUserAgent = userAgent.split(':')[0].substr(1);
+      const curr = get(pieData, pieUserAgent) || 0;
+      set(pieData, pieUserAgent, curr + byUserAgent[userAgent]);
+    });
+    const pieDataTable = Object.keys(pieData).map((key) => {
+      return [key, pieData[key]];
+    });
+    return [['User Agent', 'Count']].concat(pieDataTable);
+  }),
+
 
   geoData: computed('nodesCountByCountry', function() {
     return [['Country', 'Popularity']].concat(
