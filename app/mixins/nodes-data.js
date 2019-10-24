@@ -7,6 +7,10 @@ import moment from 'moment';
 
 import mapNetworks from '../utils/map-networks';
 
+import semver from 'semver';
+
+import CONSTANTS from '../utils/constants';
+
 export default Mixin.create({
   snapshot: reads('model.getNodes.value.snapshot'),
   _nodes: reads('model.getNodes.value'),
@@ -112,6 +116,25 @@ export default Mixin.create({
       byUserAgent[userAgentWoEB] = curr + 1;
     });
     return byUserAgent;
+  }),
+
+  nodesByUserAgentInConsensus: computed('nodes.[]', function() {
+    let byUserAgentInC = {};
+    get(this, 'nodes').forEach((node) => {
+      let userAgent = get(node, 'userAgent') || 'unknown';
+      let userAgentWoEB = userAgent.split('(')[0] + '/';
+      let nodeType = userAgentWoEB.split(':')[0].substr(1);
+      let version  = userAgentWoEB.split(':')[1];
+      version = semver.coerce(version.slice(0, -1));
+      // Assuming all clients but BU and BAC to be in consensus
+      if (((nodeType === 'BUCash') && semver.cmp(version, '>=', CONSTANTS.BUminVer))
+      || ((nodeType === 'Bitcoin ABC') && semver.cmp(version, '>=', CONSTANTS.ABCminVer))
+      || ((nodeType !== 'BUCash') && (nodeType !== 'Bitcoin ABC'))) {
+          const curr = byUserAgentInC[userAgentWoEB] || 0;
+          byUserAgentInC[userAgentWoEB] = curr + 1;
+      }
+    });
+    return byUserAgentInC;
   }),
 
   nodesCountByUserAgent: computed('nodesByUserAgent', function() {
