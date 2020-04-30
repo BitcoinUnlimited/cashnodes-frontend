@@ -1,6 +1,6 @@
 {
   "name": "cashnodes",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "private": true,
   "description": "Cashnodes is a Bitcoin Cash full nodes counter",
   "license": "MIT",
