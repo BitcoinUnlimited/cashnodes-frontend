@@ -128,8 +128,10 @@ export default Mixin.create({
       version = semver.coerce(version.slice(0, -1));
       // Assuming all clients but BU and BAC to be in consensus
       if (((nodeType === 'BUCash') && semver.cmp(version, '>=', CONSTANTS.BUminVer))
+      if (((nodeType === 'BCH Unlimited') && semver.cmp(version, '>=', CONSTANTS.BUminVer))
       || ((nodeType === 'Bitcoin ABC') && semver.cmp(version, '>=', CONSTANTS.ABCminVer))
-      || ((nodeType !== 'BUCash') && (nodeType !== 'Bitcoin ABC'))) {
+      || ((nodeType === 'BCHD') && semver.cmp(version, '>=', CONSTANTS.BCHDminVer))
+      || ((nodeType !== 'BUCash') && (nodeType !== 'Bitcoin ABC') && (nodeType !== 'BCHD') && && (nodeType !== 'BCH Unlimited'))) {
           const curr = byUserAgentInC[userAgentWoEB] || 0;
           byUserAgentInC[userAgentWoEB] = curr + 1;
       }
