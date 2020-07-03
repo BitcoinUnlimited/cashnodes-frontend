@@ -1,3 +1,8 @@
+# The project has migrated over to GitLab.com
+
+## see https://gitlab.com/bitcoinunlimited/cashnodes-frontend
+
+
 # cashnodes
 
 This README outlines the details of collaborating on this Ember application.
