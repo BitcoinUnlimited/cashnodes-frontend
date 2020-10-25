@@ -7,7 +7,7 @@ let userAgentColors = {
   "BCH Unlimited": "#4CAF50",
   "BUCash": "#4CAF50",
   "Bitcoin Cash Node": "#8BC34A",
-  "bchd": "#8BC34A",
+  "bchd": "#009900",
   "Flowee": "#48A35C",
   "Bitcoin ABC": "#FFC107",
 };

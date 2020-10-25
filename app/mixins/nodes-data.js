@@ -130,6 +130,7 @@ export default Mixin.create({
       || ((nodeType === 'Bitcoin ABC') && semver.cmp(version, '>=', CONSTANTS.ABCminVer))
       || ((nodeType === 'Bitcoin Cash Node') && semver.cmp(version, '>=', CONSTANTS.BCHNminVer))
       || ((nodeType === 'Flowee') && semver.cmp(version, '>=', CONSTANTS.FloweeminVer))
+      || ((nodeType === 'bchd') && semver.cmp(version, '>=', CONSTANTS.BCHDminVer))
       ) {
           const curr = byUserAgentInC[userAgentWoEB] || 0;
           byUserAgentInC[userAgentWoEB] = curr + 1;
