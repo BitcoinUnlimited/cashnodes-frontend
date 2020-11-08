@@ -10,6 +10,7 @@ let userAgentColors = {
   "bchd": "#009900",
   "Flowee": "#48A35C",
   "Bitcoin ABC": "#FFC107",
+  "Bitcoin Verde": "#1AB326",
 };
 
 function getUserAgentColors(byUserAgent)

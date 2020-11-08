@@ -4,4 +4,5 @@ export default {
   BCHNminVer: '22.0.0',
   FloweeminVer: '1.0.0',
   BCHDminVer: '0.17.0',
+  VerdeminVer: '1.4.0',
 };
