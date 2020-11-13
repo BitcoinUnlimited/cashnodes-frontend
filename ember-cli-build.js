@@ -9,7 +9,7 @@ module.exports = function(defaults) {
       faviconsConfig: {
         path: config.rootURL,
         appName: 'cashnodes'
-      }
+      },
       babel: {
         sourceMaps: 'inline'
       }
