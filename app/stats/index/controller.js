@@ -3,6 +3,31 @@ import { computed, get, set } from '@ember/object';
 
 import NodesDataMixin from '../../mixins/nodes-data';
 
+let userAgentColors = {
+  "BCH Unlimited": "#4CAF50",
+  "BUCash": "#4CAF50",
+  "Bitcoin Cash Node": "#8BC34A",
+  "bchd": "#009900",
+  "Flowee": "#48A35C",
+  "Bitcoin ABC": "#FFC107",
+  "Bitcoin Verde": "#1AB326",
+  "kth-bch": "#006DD4",
+  "kth": "#006DD4",
+};
+
+function getUserAgentColors(byUserAgent)
+{
+  const uniqueUserAgents = new Set(Object.keys(byUserAgent).map(fullUserAgent => {
+    return fullUserAgent.split(':')[0].substr(1);
+  }));
+  return [...uniqueUserAgents].map(userAgent => {
+     if (!(userAgent in userAgentColors))
+       return "#D9D9D9";
+     console.log(`${userAgent} color = ${userAgentColors[userAgent]}`);
+     return userAgentColors[userAgent];
+  });
+}
+
 export default Controller.extend(NodesDataMixin, {
   selectedBasicTab: 0,
 
@@ -13,17 +38,17 @@ export default Controller.extend(NodesDataMixin, {
       height: 400,
       width: 400,
       legend: {alignment: 'center', position: 'bottom'},
-      colors: ['#4CAF50', '#8BC34A', '#FFC107', '#D9D9D9', '#FF9800']
+      colors: getUserAgentColors(get(this, 'nodesByUserAgent'))
     };
   }),
   userAgentPieOptionsInC: computed(function() {
     return {
       chartArea: {width: '90%', height: '90%'},
-      title: 'IN CONSENSUS',
+      title: 'NOV 2020 UPGRADED',
       height: 400,
       width: 400,
       legend: {alignment: 'center', position: 'bottom'},
-      colors: ['#4CAF50', '#8BC34A', '#FFC107', '#D9D9D9', '#FF9800']
+      colors: getUserAgentColors(get(this, 'nodesByUserAgentInConsensus'))
     };
   }),
   nodesByUserAgentPie: computed('nodesByUserAgent', function() {
