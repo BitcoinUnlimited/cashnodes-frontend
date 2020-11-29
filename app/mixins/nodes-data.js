@@ -119,6 +119,20 @@ export default Mixin.create({
   }),
 
   nodesByUserAgentInConsensus: computed('nodes.[]', function() {
+    let heightCounts = {};
+    let mostCommonHeightCount = 0;
+    let mostCommonHeight = 0;
+    get(this, 'nodes').forEach((node) => {
+      if (heightCounts[node.height] === undefined)
+        heightCounts[node.height] = 1;
+      else
+        heightCounts[node.height]++;
+      if (heightCounts[node.height] > mostCommonHeightCount) {
+        mostCommonHeightCount = heightCounts[node.height];
+        mostCommonHeight = node.height;
+      }
+    });
+
     let byUserAgentInC = {};
     get(this, 'nodes').forEach((node) => {
       let userAgent = get(node, 'userAgent') || 'unknown';
@@ -126,16 +140,18 @@ export default Mixin.create({
       let nodeType = userAgentWoEB.split(':')[0].substr(1);
       let version  = userAgentWoEB.split(':')[1];
       version = semver.coerce(version.slice(0, -1));
-      if (((nodeType === 'BCH Unlimited') && semver.cmp(version, '>=', CONSTANTS.BUminVer))
-      || ((nodeType === 'Bitcoin ABC') && semver.cmp(version, '>=', CONSTANTS.ABCminVer))
-      || ((nodeType === 'Bitcoin Cash Node') && semver.cmp(version, '>=', CONSTANTS.BCHNminVer))
-      || ((nodeType === 'Flowee') && semver.cmp(version, '>=', CONSTANTS.FloweeminVer))
-      || ((nodeType === 'bchd') && semver.cmp(version, '>=', CONSTANTS.BCHDminVer))
-      || ((nodeType === 'Bitcoin Verde') && semver.cmp(version, '>=', CONSTANTS.VerdeminVer))
-      || ((nodeType === 'kth-bch' || nodeType === 'kth') && semver.cmp(version, '>=', CONSTANTS.KnuthminVer))
-      ) {
-          const curr = byUserAgentInC[userAgentWoEB] || 0;
-          byUserAgentInC[userAgentWoEB] = curr + 1;
+      if (node.height >= mostCommonHeight - 10) {
+        if (((nodeType === 'BCH Unlimited') && semver.cmp(version, '>=', CONSTANTS.BUminVer))
+        || ((nodeType === 'Bitcoin ABC') && semver.cmp(version, '>=', CONSTANTS.ABCminVer))
+        || ((nodeType === 'Bitcoin Cash Node') && semver.cmp(version, '>=', CONSTANTS.BCHNminVer))
+        || ((nodeType === 'Flowee') && semver.cmp(version, '>=', CONSTANTS.FloweeminVer))
+        || ((nodeType === 'bchd') && semver.cmp(version, '>=', CONSTANTS.BCHDminVer))
+        || ((nodeType === 'Bitcoin Verde') && semver.cmp(version, '>=', CONSTANTS.VerdeminVer))
+        || ((nodeType === 'kth-bch' || nodeType === 'kth') && semver.cmp(version, '>=', CONSTANTS.KnuthminVer))
+        ) {
+            const curr = byUserAgentInC[userAgentWoEB] || 0;
+            byUserAgentInC[userAgentWoEB] = curr + 1;
+        }
       }
     });
     return byUserAgentInC;

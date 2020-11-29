@@ -44,7 +44,7 @@ export default Controller.extend(NodesDataMixin, {
   userAgentPieOptionsInC: computed(function() {
     return {
       chartArea: {width: '90%', height: '90%'},
-      title: 'NOV 2020 UPGRADED',
+      title: 'IN CONSENSUS',
       height: 400,
       width: 400,
       legend: {alignment: 'center', position: 'bottom'},
