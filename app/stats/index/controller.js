@@ -23,7 +23,6 @@ function getUserAgentColors(byUserAgent)
   return [...uniqueUserAgents].map(userAgent => {
      if (!(userAgent in userAgentColors))
        return "#D9D9D9";
-     console.log(`${userAgent} color = ${userAgentColors[userAgent]}`);
      return userAgentColors[userAgent];
   });
 }
