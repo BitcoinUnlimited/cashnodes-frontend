@@ -8,7 +8,7 @@ export default Component.extend({
   userAgentData: null,
 
   variableName: computed('tableIdx', function() {
-    const idx = get(this, 'tableIdx');
+    const idx = this.tableIdx;
     if (!idx) {
       return 'User Agent';
     } else if (idx == 1) {
@@ -20,17 +20,17 @@ export default Component.extend({
   }),
 
   rows: computed('tableIdx', 'countriesData', 'networkData', 'userAgentData', function() {
-    const idx = get(this, 'tableIdx');
+    const idx = this.tableIdx;
     let data;
     let value;
     if (idx == 0) {
-      data = get(this, 'userAgentData');
+      data = this.userAgentData;
       value = 'userAgent';
     } else if (idx == 1) {
-      data = get(this, 'countriesData');
+      data = this.countriesData;
       value = 'country';
     } else {
-      data = get(this, 'networkData');
+      data = this.networkData;
       value = 'net';
     }
     let rank = 1;

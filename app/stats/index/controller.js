@@ -37,7 +37,7 @@ export default Controller.extend(NodesDataMixin, {
       height: 400,
       width: 400,
       legend: {alignment: 'center', position: 'bottom'},
-      colors: getUserAgentColors(get(this, 'nodesByUserAgent'))
+      colors: getUserAgentColors(this.nodesByUserAgent)
     };
   }),
   userAgentPieOptionsInC: computed(function() {
@@ -47,12 +47,12 @@ export default Controller.extend(NodesDataMixin, {
       height: 400,
       width: 400,
       legend: {alignment: 'center', position: 'bottom'},
-      colors: getUserAgentColors(get(this, 'nodesByUserAgentInConsensus'))
+      colors: getUserAgentColors(this.nodesByUserAgentInConsensus)
     };
   }),
   nodesByUserAgentPie: computed('nodesByUserAgent', function() {
     // pie chart: *abc* *bu* *xt* others (user agent)
-    const byUserAgent = get(this, 'nodesByUserAgent');
+    const byUserAgent = this.nodesByUserAgent;
     let pieData = {};
     Object.keys(byUserAgent).forEach((userAgent) => {
       let pieUserAgent = userAgent.split(':')[0].substr(1);
@@ -67,7 +67,7 @@ export default Controller.extend(NodesDataMixin, {
 
   nodesByUserAgentPieInC: computed('nodesByUserAgentInConsensus', function() {
     // pie chart: *abc* *bu* *xt* others (user agent)
-    const byUserAgent = get(this, 'nodesByUserAgentInConsensus');
+    const byUserAgent = this.nodesByUserAgentInConsensus;
     let pieData = {};
     Object.keys(byUserAgent).forEach((userAgent) => {
       let pieUserAgent = userAgent.split(':')[0].substr(1);
@@ -83,7 +83,7 @@ export default Controller.extend(NodesDataMixin, {
 
   geoData: computed('nodesCountByCountry', function() {
     return [['Country', 'Popularity']].concat(
-      get(this, 'nodesCountByCountry').map((node) => {
+      this.nodesCountByCountry.map((node) => {
         return [node.country, node.count];
       }));
   }),

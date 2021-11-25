@@ -18,8 +18,8 @@ export default Component.extend({
 
   didReceiveAttrs() {
     this._super(...arguments);
-    let table = new Table(get(this, 'columns'), get(this, 'model'), { enableSync: get(this, 'enableSync') });
-    let sortColumn = get(table, 'allColumns').findBy('valuePath', get(this, 'sort'));
+    let table = new Table(this.columns, this.model, { enableSync: this.enableSync });
+    let sortColumn = get(table, 'allColumns').findBy('valuePath', this.sort);
 
     // Setup initial sort column
     if (sortColumn) {
@@ -32,7 +32,7 @@ export default Component.extend({
 
   actions: {
     onScrolledToBottom() {
-      if (get(this, 'canLoadMore')) {
+      if (this.canLoadMore) {
         this.incrementProperty('page');
       }
     },
@@ -45,7 +45,7 @@ export default Component.extend({
           canLoadMore: true,
           page: 0
         });
-        this.get('model').clear();
+        this.model.clear();
       }
     }
   }

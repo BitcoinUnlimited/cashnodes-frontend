@@ -4,15 +4,15 @@ import { computed, get } from '@ember/object';
 
 export default Component.extend({
   fstRow: computed('value', function() {
-    return get(this, 'value')[0];
+    return this.value[0];
   }),
   sndRow: computed('value', function() {
-    return get(this, 'value')[1];
+    return this.value[1];
   }),
   thrRow: computed('value', function() {
-    return get(this, 'value')[2];
+    return this.value[2];
   }),
   fourthRow: computed('value', function() {
-    return get(this, 'value')[3];
+    return this.value[3];
   }),
 });

@@ -8,7 +8,7 @@ import ENV from 'cashnodes/config/environment';
 export default Route.extend({
   model() {
     return {
-      getNodes: get(this, 'getNodesTask').perform()
+      getNodes: this.getNodesTask.perform()
     };
   },
 

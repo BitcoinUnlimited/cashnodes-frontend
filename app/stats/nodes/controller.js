@@ -53,7 +53,7 @@ export default Controller.extend(NodesDataMixin, {
   }),
 
   fileterNodesCount: computed('nodesData.[]', function() {
-    return get(this, 'nodesData').length;
+    return this.nodesData.length;
   }),
 
   doFilterNodes: task(function *(query) {
@@ -64,7 +64,7 @@ export default Controller.extend(NodesDataMixin, {
   actions: {
     filterNodes(filter) {
       set(this, 'filter', filter);
-      get(this, 'doFilterNodes').perform(filter);
+      this.doFilterNodes.perform(filter);
     }
   }
 });

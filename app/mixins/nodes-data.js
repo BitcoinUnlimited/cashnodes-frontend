@@ -16,7 +16,7 @@ export default Mixin.create({
   _nodes: reads('model.getNodes.value'),
 
   snapshotDate: computed('snapshot', function() {
-    return moment.unix(parseInt(get(this, 'snapshot'))).format('ddd MMM DD YYYY, HH:mm [UTC]Z');
+    return moment.unix(parseInt(this.snapshot)).format('ddd MMM DD YYYY, HH:mm [UTC]Z');
   }),
 
   _serviceBits(services) {
@@ -35,7 +35,7 @@ export default Mixin.create({
   },
 
   nodes: computed('_nodes', function() {
-    const _ns = get(this, '_nodes');
+    const _ns = this._nodes;
     return _ns.map(node => {
       return {
         address: `${node[0]}:${node[1]}`,
@@ -57,8 +57,8 @@ export default Mixin.create({
   }),
 
   nodesData: computed('nodes', 'filterQuery', function() {
-    const nodes = get(this, 'nodes');
-    const filterQuery = get(this, 'filterQuery');
+    const nodes = this.nodes;
+    const filterQuery = this.filterQuery;
     const allNodes = nodes.map(node => {
       set(node, 'addressData', [
         node.address,
@@ -104,12 +104,12 @@ export default Mixin.create({
   }),
 
   nodesCount: computed('nodes.[]', function() {
-    return get(this, 'nodes').length;
+    return this.nodes.length;
   }),
 
   nodesByUserAgent: computed('nodes.[]', function() {
     let byUserAgent = {};
-    get(this, 'nodes').forEach((node) => {
+    this.nodes.forEach((node) => {
       let userAgent = get(node, 'userAgent') || 'unknown';
       let userAgentWoEB = userAgent.split('(')[0] + '/';
       const curr = byUserAgent[userAgentWoEB] || 0;
@@ -122,7 +122,7 @@ export default Mixin.create({
     let heightCounts = {};
     let mostCommonHeightCount = 0;
     let mostCommonHeight = 0;
-    get(this, 'nodes').forEach((node) => {
+    this.nodes.forEach((node) => {
       if (heightCounts[node.height] === undefined)
         heightCounts[node.height] = 1;
       else
@@ -134,7 +134,7 @@ export default Mixin.create({
     });
 
     let byUserAgentInC = {};
-    get(this, 'nodes').forEach((node) => {
+    this.nodes.forEach((node) => {
       let userAgent = get(node, 'userAgent') || 'unknown';
       let userAgentWoEB = userAgent.split('(')[0] + '/';
       let nodeType = userAgentWoEB.split(':')[0].substr(1);
@@ -158,7 +158,7 @@ export default Mixin.create({
   }),
 
   nodesCountByUserAgent: computed('nodesByUserAgent', function() {
-    const nodesByUserAgent = get(this, 'nodesByUserAgent');
+    const nodesByUserAgent = this.nodesByUserAgent;
     if (!nodesByUserAgent) { return; }
     return Object.keys(nodesByUserAgent).map((key) => {
       return {userAgent: key, count: nodesByUserAgent[key]};
@@ -167,7 +167,7 @@ export default Mixin.create({
 
   nodesCountByCountry: computed('nodes.[]', function() {
     let byCountry = {};
-    get(this, 'nodes').forEach((node) => {
+    this.nodes.forEach((node) => {
       if (!node.countryCode) { return; }
       const curr = get(byCountry, node.countryCode) || 0;
       set(byCountry, node.countryCode, curr + 1);
@@ -179,7 +179,7 @@ export default Mixin.create({
 
   nodesCountByNetwork: computed('nodesData.[]', function() {
     let byNet = {};
-    get(this, 'nodesData').forEach((node) => {
+    this.nodesData.forEach((node) => {
       const netData = get(node, 'networkData')
       if (!netData) { return; }
       if (!netData[0]) { return; }
