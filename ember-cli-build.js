@@ -3,6 +3,7 @@
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = function (defaults) {
+  let config = defaults.project.config(process.env.EMBER_ENV || 'development');
   let app = new EmberApp(defaults, {
     'ember-cli-favicon': {
       faviconsConfig: {
