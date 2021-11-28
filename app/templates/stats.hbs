@@ -1,0 +1,67 @@
+{{#if @model.getNodes.isRunning}}
+  <div class="layout flex layout-align-space-around">
+    {{uk-spinner warn=true ratio=5}}
+  </div>
+{{else}}
+  <UkFlex @direction="row" @vertical="around" @wrapAlignment="around">
+    <div class="uk-width-5-6">
+      <LinkTo @route="stats">
+        <img src="assets/images/logo.png" class="logo" alt="Bitcon Cash"/>
+      </LinkTo>
+    </div>
+    <div class="uk-width-1-6">
+      <h6 class="powered--text">powered by</h6>
+      <a href="https://www.bitcoinunlimited.info/" target="_blank" rel="noopener noreferrer">
+        <img class="powered--logo" src="https://www.bitcoinunlimited.info/img/bitcoin-unlimited.png" alt="Bitcoin Unlimited"/>
+      </a>
+    </div>
+  </UkFlex>
+  <UkFlex @direction="column" @vertical="around" @wrapAlignment="around">
+    <NodesSummary @nodes={{@model.getNodes.value}}/>
+    <UkFlex @direction="row">
+      <div class="uk-width-1-3">
+          <NodesByUaPie @nodes={{@model.getNodes.value}} /> 
+      </div>
+
+      <div class="uk-width-1-3">
+          <NodesByUaConsensusPie @nodes={{@model.getNodes.value}} /> 
+      </div>
+
+      <div class="uk-width-1-3">
+        <UkSwitcher @animation="uk-animation-fade" as |switcher|>
+          <switcher.nav @type="tab" as |nav|>
+            {{! nav.component is either a uk-tab or a uk-subnav component }}
+            <nav.component as |tab|>
+              <tab.item>User Agent</tab.item>
+              <tab.item>Country</tab.item>
+              <tab.item>Network</tab.item>
+            </nav.component>
+          </switcher.nav>
+
+          <switcher.content as |content|>
+            <content.item>
+              <h5>Content 1</h5>
+            </content.item>
+            <content.item>
+              <h5>Content 2</h5>
+            </content.item>
+            <content.item>
+              <h5>Content 3</h5>
+            </content.item>
+          </switcher.content>
+        </UkSwitcher>
+      </div>
+    </UkFlex>
+
+    <div class="md-padding text-center footer">
+      <p>
+        Start your own Bitcoin Cash full node on your Linux, Mac, BSD or Windows system by running this command:
+      </p>
+      <p class="code">
+        <code>
+          curl <a href=https://cashnodes.io/install-bu-full-node.sh> https://cashnodes.io/install-bu-full-node.sh</a> | sh
+        </code>
+      </p>
+    </div>
+  </UkFlex>
+{{/if}}
