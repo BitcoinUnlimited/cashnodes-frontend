@@ -344,7 +344,7 @@ export default class CashNodes {
   get nodesCountByNetwork() {
     let byNet = {};
     this.nodesData.forEach((node) => {
-      const netData = node.networkdata;
+      const netData = node.networkData;
       if (!netData) {
         return;
       }
