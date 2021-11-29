@@ -314,7 +314,7 @@ export default class CashNodes {
   get nodesCountByUserAgent() {
     const nodesByUserAgent = this.nodesByUserAgent;
     if (!nodesByUserAgent) {
-      return;
+      return undefined;
     }
     return Object.keys(nodesByUserAgent)
       .map((key) => {
@@ -327,11 +327,11 @@ export default class CashNodes {
   get nodesCountByCountry() {
     let byCountry = {};
     this.nodes.forEach((node) => {
-      if (!node.countryCode) {
+      if (!node.countrycode) {
         return;
       }
-      const curr = get(byCountry, node.countryCode) || 0;
-      set(byCountry, node.countryCode, curr + 1);
+      const curr = byCountry[node.countrycode] || 0;
+      set(byCountry, node.countrycode, curr + 1);
     });
     return Object.keys(byCountry)
       .map((key) => {
@@ -344,19 +344,19 @@ export default class CashNodes {
   get nodesCountByNetwork() {
     let byNet = {};
     this.nodesData.forEach((node) => {
-      const netData = get(node, 'networkData');
+      const netData = node.networkdata;
       if (!netData) {
         return;
       }
       if (!netData[0]) {
         return;
       }
-      const curr = get(byNet, netData[0]) || 0;
+      const curr = byNet[netData[0]] || 0;
       set(byNet, netData[0], curr + 1);
     });
     return Object.keys(byNet)
       .map((key) => {
-        return { net: key, count: get(byNet, key) };
+        return { net: key, count: byNet[key] };
       })
       .sortBy('count')
       .reverse();

@@ -1,0 +1,22 @@
+<UkSwitcher @animation="uk-animation-fade" as |switcher|>
+  <switcher.nav @type="tab" as |nav|>
+    {{! nav.component is either a uk-tab or a uk-subnav component }}
+    <nav.component as |tab|>
+      <tab.item>User Agent</tab.item>
+      <tab.item>Country</tab.item>
+      <tab.item>Network</tab.item>
+    </nav.component>
+  </switcher.nav>
+
+  <switcher.content as |content|>
+    <content.item>
+      <TopTenTable @columnName="User Agent" @rows={{this.nodesByUA}}/>
+    </content.item>
+    <content.item>
+      <TopTenTable @columnName="Country" @rows={{this.nodesByCountry}}/>
+    </content.item>
+    <content.item>
+      <TopTenTable @columnName="Country" @rows={{this.nodesByNetwork}}/>
+    </content.item>
+  </switcher.content>
+</UkSwitcher>

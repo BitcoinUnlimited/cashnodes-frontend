@@ -1,0 +1,22 @@
+<table>
+  <thead>
+    <td>
+      Rank
+    </td>
+    <td>
+      {{@columnName}}
+    </td>
+    <td>
+      Nodes
+    </td>
+  </thead>
+  <tbody>
+    {{#each @rows as |row|}}
+      <tr>
+        <td>{{row.rank}}</td>
+        <td>{{row.value}}</td>
+        <td>{{row.count}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
