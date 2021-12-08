@@ -188,7 +188,7 @@ export default class CashNodes {
         longitude: node[11],
         timezone: node[12],
         asn: node[13],
-        organizationname: node[14],
+        network: node[14],
       };
     });
   }
@@ -217,7 +217,7 @@ export default class CashNodes {
         '',
       ]);
       set(node, 'networkData', [
-        this._mapNetworks(node.organizationName),
+        this._mapNetworks(node.network),
         node.asn,
         '',
       ]);
