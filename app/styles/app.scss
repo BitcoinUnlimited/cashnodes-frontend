@@ -1,1 +1,156 @@
+$primary: 'green';
+$warn: 'light-green';
+$accent: 'green';
+
 @import 'ember-uikit';
+
+.no-margin {
+  margin: 0;
+}
+
+.no-list-padding {
+  margin: 0 -16px;
+}
+
+.logo {
+  max-width: 70vw;
+}
+
+.odd-row {
+  background-color: #f0f4f6;
+}
+
+.even-row {
+  background-color: white;
+}
+
+.lt-row {
+  height: 50px;
+
+  &.is-selected {
+    border-color: #dadada;
+    border-width: 0;
+    border-bottom-width: 1px;
+    border-style: solid;
+  }
+
+  &:not(.is-selected):hover {
+    background-color: #f5f4f4;
+  }
+
+  &:last-of-type {
+    td {
+      border-bottom-width: 0;
+    }
+  }
+
+  &.colored-row {
+    color: white;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  td {
+    font-size: 13px;
+  }
+}
+
+a, a:visited {
+    text-decoration: none;
+    color: black;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+.footer {
+  background-color: #f8f8f8;
+  font-size: 18px;
+  padding: 10px 5px 10px 5px;
+  border: 1px solid #efefee;
+  border-radius: 4px;
+}
+
+.search-div {
+  background-color: #f8f8f8;
+  padding: 10px 10px 10px 10px;
+  border: 1px solid #efefee;
+  border-radius: 4px;
+}
+
+.code {
+  font-size: 18px;
+  font-weight: bold;
+  border: 0px;
+}
+
+table {
+  margin-bottom: 8px;
+  max-width: 100%;
+  width: 100%;
+  border-spacing: 0;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+td, th {
+  padding: 12px 16px;
+  text-align: left;
+}
+
+td {
+  vertical-align: top;
+}
+
+td.description *:first-child {
+  margin-top: 0;
+}
+
+td.description *:last-child {
+  margin-bottom: 0;
+}
+
+.highcharts-background {
+    fill: #f4f6f8;
+    stroke: #f4f6f8;
+}
+
+//tr:nth-child(odd) td {
+//  background-color: lighten(color($primary, '50'), 2);
+//}
+//
+//tr:nth-child(even) td {
+//  background-color: lighten(color($primary, '50'), 4);
+//}
+//
+//th {
+//  background-color: color($primary, '400');
+//  color: white;
+//}
+//
+//tr.subheading td {
+//  background-color: color($primary, '100');
+//}
+
+.text-center {
+  text-align: center;
+}
+
+.wrap-text {
+  overflow: hidden !important;
+  white-space: initial !important;
+}
+
+.powered--text {
+  display: inline;
+  margin: 0;
+  line-height: 30px;
+}
+
+.powered--logo {
+  display: inline;
+  vertical-align: middle;
+  height: 30px;
+}
