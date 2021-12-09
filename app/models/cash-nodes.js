@@ -5,13 +5,12 @@ import moment from 'moment';
 import semver from 'semver';
 
 const BCH_VERSIONS = {
-  BUminVer: '1.9.0',
-  ABCminVer: '0.22.6',
-  BCHNminVer: '22.0.0',
+  BUminVer: '1.9.2',
+  BCHNminVer: '23.0.0',
   FloweeminVer: '1.0.0',
-  BCHDminVer: '0.17.0',
-  VerdeminVer: '1.4.0',
-  KnuthminVer: '0.4.0',
+  BCHDminVer: '0.18.1',
+  VerdeminVer: '2.0.1',
+  KnuthminVer: '0.22.0',
 };
 
 export default class CashNodes {
@@ -290,8 +289,6 @@ export default class CashNodes {
         if (
           (nodeType === 'BCH Unlimited' &&
             semver.cmp(version, '>=', BCH_VERSIONS.BUminVer)) ||
-          (nodeType === 'Bitcoin ABC' &&
-            semver.cmp(version, '>=', BCH_VERSIONS.ABCminVer)) ||
           (nodeType === 'Bitcoin Cash Node' &&
             semver.cmp(version, '>=', BCH_VERSIONS.BCHNminVer)) ||
           (nodeType === 'Flowee' &&
