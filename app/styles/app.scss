@@ -112,6 +112,15 @@ td.description *:last-child {
   margin-bottom: 0;
 }
 
+.highcharts-root {
+  font-family: 'Inter var';
+}
+
+.highcharts-title {
+  font-family: 'Helvetica';
+  font-size: 14px;
+  font-weight: 200;
+}
 .highcharts-background {
     fill: #f4f6f8;
     stroke: #f4f6f8;
