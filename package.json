@@ -70,7 +70,7 @@
     "lodash.defaultsdeep": "^4.6.1",
     "lodash.merge": "^4.6.2",
     "minimatch": "^3.0.4",
-    "minimist": "^1.2.3",
+    "minimist": "^1.2.6",
     "semver": "^6.3.0",
     "serialize-javascript": ">=3.1.0",
     "virtual-each": "git+https://github.com/sickpig/virtual-each.git#master"
